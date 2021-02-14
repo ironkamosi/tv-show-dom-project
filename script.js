@@ -1,27 +1,34 @@
 //You can edit ALL of the code here
 // global variables
 
-
 // window onload set up
 function setup() {
   const allEpisodes = getAllEpisodes();
   makePageForEpisodes(allEpisodes);
 }
 
+function formatSeasonNum(num) {
+  if (num < 10) {
+    return "0" + num;
+  } else {
+    return num;
+  }
+}
+
 // displays a single episode
 function singleEpisode(element) {
   let episodeContainer = document.createElement("div");
   let img = document.createElement("img");
-  img.src = element.image.medium
-  let paragraph = document.createElement("p");
-  let paragraphSummary = document.createElement("p");
-  paragraph.innerHTML = `S${element.season} Number${element.number}`;
-  paragraphSummary.innerHTML = `${element.summary}`;
-  
+  img.src = element.image.medium;
+  let title = document.createElement("h2");
+  let Summary = document.createElement("p");
+  title.innerHTML = `${element.name} S${formatSeasonNum(element.season)} Number${formatSeasonNum(element.number)}`;
+  Summary.innerHTML = `${element.summary}`;
+
+  episodeContainer.appendChild(title);
   episodeContainer.appendChild(img);
-  episodeContainer.appendChild(paragraph);
-  episodeContainer.appendChild(paragraphSummary);
-  rootElem.appendChild(episodeContainer)
+  episodeContainer.appendChild(Summary);
+  rootElem.appendChild(episodeContainer);
 }
 
 // display multiple episodes + loops the data
@@ -33,7 +40,7 @@ function displayEpisodes(element) {
 }
 
 function makePageForEpisodes(episodeList) {
-  displayEpisodes(episodeList)
+  displayEpisodes(episodeList);
   // const rootElem = document.getElementById("root");
   //rootElem.textContent = `Got ${episodeList.length} episode(s)`;
 }
