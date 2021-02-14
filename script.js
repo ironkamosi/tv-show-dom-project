@@ -1,6 +1,7 @@
 //You can edit ALL of the code here
 // global variables
 
+
 // window onload set up
 function setup() {
   const allEpisodes = getAllEpisodes();
@@ -26,7 +27,10 @@ function formatSeasonNum(num) {
 // displays a single episode
 function singleEpisode(element) {
   let episodeContainer = document.createElement("div");
+  episodeContainer.style.backgroundColor = "#f5f5dc";
   episodeContainer.style.padding = "2em";
+  episodeContainer.style.width = "30%";
+  episodeContainer.style.margin = "2em";
 
   let title = document.createElement("h2");
   title.style.textAlign = "center";
@@ -47,24 +51,38 @@ function singleEpisode(element) {
   episodeContainer.appendChild(img);
   episodeContainer.appendChild(summary);
   rootElem.appendChild(episodeContainer);
+  return episodeContainer 
+
 }
 
 // display multiple episodes + loops the data
-function displayEpisodes(element) {
-  singleEpisode(element[0]);
-  element.forEach((element) => {
-    `${element.name} ${element.season}`
+function displayEpisodes(elements) {
+  let styleContainer = document.createElement("div");
+  styleContainer.style.flexWrap = "wrap";
+  
+  elements.forEach((element) => {
+    styleContainer.appendChild(singleEpisode(element));
+    
   });
+  rootElem.appendChild(styleContainer);
 }
 
 function makePageForEpisodes(episodeList) {
   displayEpisodes(episodeList);
   // const rootElem = document.getElementById("root");
   //rootElem.textContent = `Got ${episodeList.length} episode(s)`;
+function footer() {
+  let footer = document.createElement("footer");
+  footer.innerHTML = "<p>https://tvmaze.com/</p>";
+  rootElem.appendChild(footer);
+  }
+  footer()
 }
 const rootElem = document.getElementById("root");
 
 window.onload = setup;
+
+
 
 /*
 pre task - create one card 
