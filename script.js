@@ -28,16 +28,15 @@ function formatSeasonNum(num) {
 function singleEpisode(element) {
   let episodeContainer = document.createElement("div");
   episodeContainer.style.backgroundColor = "#f5f5dc";
-  episodeContainer.style.padding = "2em";
-  episodeContainer.style.width = "30%";
-  episodeContainer.style.margin = "2em";
+  episodeContainer.style.padding = "1.5em";
+  episodeContainer.style.width = "20rem";
+  episodeContainer.style.margin = "1.5em";
 
   let title = document.createElement("h2");
   title.style.textAlign = "center";
-  title.innerHTML = `${element.name}: S${formatSeasonNum(
-    element.season
-  )}E${formatSeasonNum(element.number)}`;
-
+  title.innerHTML = `${element.name}: S${formatSeasonNum(element.season)}E${formatSeasonNum(element.number)}`;
+  title.className = "title";
+  
   let img = document.createElement("img");
   img.style.margin = "0 auto";
   img.style.width = "99%";
@@ -48,7 +47,7 @@ function singleEpisode(element) {
   let summary = document.createElement("p");
   summary.style.texAlign = "center";
   summary.innerHTML = `${element.summary}`;
-
+  summary.className = "summary";
   episodeContainer.appendChild(title);
   episodeContainer.appendChild(img);
   episodeContainer.appendChild(summary);
@@ -60,8 +59,9 @@ function singleEpisode(element) {
 function displayEpisodes(elements) {
   let styleContainer = document.createElement("div");
   styleContainer.className = "style-container";
-  // styleContainer.style.width = "100%";
-  // styleContainer.style.flexWrap = "wrap";
+  styleContainer.style.width = "98%";
+  styleContainer.style.flexWrap = "wrap";
+  styleContainer.style.margin = "0 auto";
 
   elements.forEach((element) => {
     styleContainer.appendChild(singleEpisode(element));
