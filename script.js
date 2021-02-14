@@ -34,8 +34,10 @@ function singleEpisode(element) {
 
   let title = document.createElement("h2");
   title.style.textAlign = "center";
-  title.innerHTML = `${element.name}: S${formatSeasonNum(element.season)}E${formatSeasonNum(element.number)}`;
-  
+  title.innerHTML = `${element.name}: S${formatSeasonNum(
+    element.season
+  )}E${formatSeasonNum(element.number)}`;
+
   let img = document.createElement("img");
   img.style.margin = "0 auto";
   img.style.width = "99%";
@@ -51,18 +53,18 @@ function singleEpisode(element) {
   episodeContainer.appendChild(img);
   episodeContainer.appendChild(summary);
   rootElem.appendChild(episodeContainer);
-  return episodeContainer 
-
+  return episodeContainer;
 }
 
 // display multiple episodes + loops the data
 function displayEpisodes(elements) {
   let styleContainer = document.createElement("div");
-  styleContainer.style.flexWrap = "wrap";
-  
+  styleContainer.className = "style-container";
+  // styleContainer.style.width = "100%";
+  // styleContainer.style.flexWrap = "wrap";
+
   elements.forEach((element) => {
     styleContainer.appendChild(singleEpisode(element));
-    
   });
   rootElem.appendChild(styleContainer);
 }

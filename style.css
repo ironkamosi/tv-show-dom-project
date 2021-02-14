@@ -2,3 +2,6 @@
   color: black;
 }
 
+.style-container{
+display: flex;
+}
