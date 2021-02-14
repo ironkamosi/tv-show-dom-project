@@ -4,12 +4,16 @@ function setup() {
   makePageForEpisodes(allEpisodes);
 }
 
+function displayEpisode(element) {
+  
+};
+
 function displayEpisodes(element) {
-  let divDisplay = document.getElementById("display");
+  let divDisplay = document.getElementById("root");
   let img = document.creatElement("img");
   let paragraph = document.createElement("p");
   element.forEach((element) => {
-    `${element.name} ${element.runtime}`
+    `${element.name} ${element.season}`
   });
 }
 function makePageForEpisodes(episodeList) {
@@ -18,6 +22,19 @@ function makePageForEpisodes(episodeList) {
 }
 
 window.onload = setup;
+
+/*
+pre task - create one card 
+
+Java Script gather the elements for the the episode 
+- name of episode, season (number), episode (number), image(medium), summary(p)
+
+html 
+- create divs for each element.
+
+*/
+
+
 
 /*
 Minimal features#
