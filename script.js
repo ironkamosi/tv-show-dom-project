@@ -7,6 +7,7 @@ function setup() {
   makePageForEpisodes(allEpisodes);
 }
 
+// formats the number for the season data
 function formatSeasonNum(num) {
   if (num < 10) {
     return "0" + num;
@@ -15,28 +16,45 @@ function formatSeasonNum(num) {
   }
 }
 
+/* 
+turnery operation version 
+function formatSeasonNum(num) {
+  return (num < 10) ?  "0" + num : num;
+  
+}
+ */
 // displays a single episode
 function singleEpisode(element) {
   let episodeContainer = document.createElement("div");
-  let img = document.createElement("img");
-  img.src = element.image.medium;
+  episodeContainer.style.padding = "2em";
+
   let title = document.createElement("h2");
-  let Summary = document.createElement("p");
-  title.innerHTML = `${element.name} S${formatSeasonNum(element.season)} Number${formatSeasonNum(element.number)}`;
-  Summary.innerHTML = `${element.summary}`;
+  title.style.textAlign = "center";
+  title.innerHTML = `${element.name}: S${formatSeasonNum(element.season)}E${formatSeasonNum(element.number)}`;
+  
+  let img = document.createElement("img");
+  img.style.margin = "0 auto";
+  img.style.width = "99%";
+  // img.style.paddingLeft = "2em";
+  // img.style.paddingRight = "2em";
+  img.src = element.image.medium;
+
+  let summary = document.createElement("p");
+  summary.style.texAlign = "center";
+  summary.innerHTML = `${element.summary}`;
 
   episodeContainer.appendChild(title);
   episodeContainer.appendChild(img);
-  episodeContainer.appendChild(Summary);
+  episodeContainer.appendChild(summary);
   rootElem.appendChild(episodeContainer);
 }
 
 // display multiple episodes + loops the data
 function displayEpisodes(element) {
   singleEpisode(element[0]);
-  // element.forEach((element) => {
-  //   `${element.name} ${element.season}`
-  // });
+  element.forEach((element) => {
+    `${element.name} ${element.season}`
+  });
 }
 
 function makePageForEpisodes(episodeList) {
