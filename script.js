@@ -1,25 +1,43 @@
 //You can edit ALL of the code here
+// global variables
+
+
+// window onload set up
 function setup() {
   const allEpisodes = getAllEpisodes();
   makePageForEpisodes(allEpisodes);
 }
 
-function displayEpisode(element) {
-  
-};
-
-function displayEpisodes(element) {
-  let divDisplay = document.getElementById("root");
-  let img = document.creatElement("img");
+// displays a single episode
+function singleEpisode(element) {
+  let episodeContainer = document.createElement("div");
+  let img = document.createElement("img");
+  img.src = element.image.medium
   let paragraph = document.createElement("p");
-  element.forEach((element) => {
-    `${element.name} ${element.season}`
-  });
+  let paragraphSummary = document.createElement("p");
+  paragraph.innerHTML = `S${element.season} Number${element.number}`;
+  paragraphSummary.innerHTML = `${element.summary}`;
+  
+  episodeContainer.appendChild(img);
+  episodeContainer.appendChild(paragraph);
+  episodeContainer.appendChild(paragraphSummary);
+  rootElem.appendChild(episodeContainer)
 }
+
+// display multiple episodes + loops the data
+function displayEpisodes(element) {
+  singleEpisode(element[0]);
+  // element.forEach((element) => {
+  //   `${element.name} ${element.season}`
+  // });
+}
+
 function makePageForEpisodes(episodeList) {
-  const rootElem = document.getElementById("root");
-  rootElem.textContent = `Got ${episodeList.length} episode(s)`;
+  displayEpisodes(episodeList)
+  // const rootElem = document.getElementById("root");
+  //rootElem.textContent = `Got ${episodeList.length} episode(s)`;
 }
+const rootElem = document.getElementById("root");
 
 window.onload = setup;
 
@@ -28,13 +46,11 @@ pre task - create one card
 
 Java Script gather the elements for the the episode 
 - name of episode, season (number), episode (number), image(medium), summary(p)
-
+- create background 
 html 
 - create divs for each element.
 
 */
-
-
 
 /*
 Minimal features#
