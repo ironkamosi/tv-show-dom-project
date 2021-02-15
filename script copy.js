@@ -60,7 +60,10 @@ function singleEpisode(element) {
 
 // display multiple episodes + loops the data
 function displayEpisodes(elements) {
- 
+  let container = document.getElementsByClassName("style-container");
+  if (container) {
+    container.innerHTML = "";
+  }
   let styleContainer = document.createElement("div");
   styleContainer.className = "style-container";
   styleContainer.style.width = "98%";
@@ -96,13 +99,17 @@ function searchKeyWords() {
 
   inputBox.addEventListener("keyup", (event) => {
     const searchString = event.target.value.toLowerCase();
-    const searchResults = getAllEpisodes().filter((episode) => {
-      return (
-        episode.name.toLowerCase().includes(searchString) ||
-        episode.summary.toLowerCase().includes(searchString)
-      );
-    });
-  displayEpisodes(searchResults)
+    if (searchString.trim() === "") {
+      displayEpisodes(getAllEpisodes());
+    } else {
+     const searchResults = getAllEpisodes().filter((episode) => {
+       return (
+         episode.name.toLowerCase().includes(searchString) ||
+         episode.summary.toLowerCase().includes(searchString)
+       );
+     });
+      displayEpisodes(searchResults); 
+    }
   });
 }
 
