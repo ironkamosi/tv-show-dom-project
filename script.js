@@ -27,6 +27,7 @@ function formatSeasonNum(num) {
 // displays a single episode
 function singleEpisode(element) {
   let episodeContainer = document.createElement("div");
+  episodeContainer.className = "episodeContainerClassName"
   episodeContainer.style.backgroundColor = "#f5f5dc";
   episodeContainer.style.padding = "1.5em";
   episodeContainer.style.width = "20rem";
@@ -34,9 +35,11 @@ function singleEpisode(element) {
 
   let title = document.createElement("h2");
   title.style.textAlign = "center";
-  title.innerHTML = `${element.name}: S${formatSeasonNum(element.season)}E${formatSeasonNum(element.number)}`;
+  title.innerHTML = `${element.name}: S${formatSeasonNum(
+    element.season
+  )}E${formatSeasonNum(element.number)}`;
   title.className = "title";
-  
+
   let img = document.createElement("img");
   img.style.margin = "0 auto";
   img.style.width = "99%";
@@ -64,7 +67,7 @@ function displayEpisodes(elements) {
   styleContainer.style.margin = "0 auto";
 
   elements.forEach((element) => {
-  styleContainer.appendChild(singleEpisode(element));
+    styleContainer.appendChild(singleEpisode(element));
   });
   rootElem.appendChild(styleContainer);
 }
@@ -73,46 +76,59 @@ function makePageForEpisodes(episodeList) {
   displayEpisodes(episodeList);
   // const rootElem = document.getElementById("root");
   //rootElem.textContent = `Got ${episodeList.length} episode(s)`;
-function footer() {
-  let footer = document.createElement("footer");
-  footer.innerHTML = "<p>https://tvmaze.com/</p>";
-  rootElem.appendChild(footer);
+  function footer() {
+    let footer = document.createElement("footer");
+    footer.innerHTML = "<p>https://tvmaze.com/</p>";
+    rootElem.appendChild(footer);
   }
-  footer()
+  footer();
 }
 
-function searchKeyWords(word) {
-  // let episodeList = 
+function searchKeyWords() {
+  let episodeList = getAllEpisodes();
   let inputBox = document.createElement("input");
   inputBox.setAttribute("id", "inputBoxId");
-  inputBox.setAttribute("placeHolder", "type and search for episode")
+  inputBox.setAttribute("placeHolder", "type and search for episode");
   inputBox.style.width = "25em";
   inputBox.style.backgroundColor = "#f5f5f5";
-  rootElem.appendChild(inputBox)
+  rootElem.appendChild(inputBox);
 
-  inputBox.addEventListener('keyup', (event) => {
+
+  inputBox.addEventListener("keyup", (event) => {
     const searchString = event.target.value.toLowerCase();
-    const filteredCharacters = episodeList.filter((episode) => {
-        return (
-            episode.name.toLowerCase().includes(searchString) ||
-            episode.summary.toLowerCase().includes(searchString)
-        );
+    const episodeContainers = document.getElementsByClassName("episodeContainerClassName");
+    console.log(episodeContainers,"hello")
+    
+    episodeList.forEach((episode) => {
+      let episodeContainers
+      if (
+        episode.name.toLowerCase().includes(searchString) ||
+        episode.summary.toLowerCase().includes(searchString)
+      ) {
+       
+      }
     });
-});
-searchKeyWords()
+  });
+  // inputBox.addEventListener('keyup', (event) => {
+  //   const searchString = event.target.value.toLowerCase();
+  //   const filteredCharacters = episodeList.filter((episode) => {
+  //     return (
+  //       episode.name.toLowerCase().includes(searchString) ||
+  //       episode.summary.toLowerCase().includes(searchString)
+  //     );
+
+  //   });
+  // });
+}
+searchKeyWords();
 window.onload = setup;
-
-
 
 /* 
 pre task - 
 create function - create elements for search bar / access div's from html
-
 create a loop with a condition 
-
+modify the dom each time you are checking 
 */
-
-
 
 /* Task 2- level 200
 Add Search#
@@ -128,15 +144,11 @@ The search should look through an in-memory copy of the episode list.
 Do not fetch the data again each time something is typed!
 */
 
-
-
 /*
 pre task - create one card 
-
 Java Script gather the elements for the the episode 
 - name of episode, season (number), episode (number), image(medium), summary(p)
 - create background 
 html 
 - create divs for each element.
-
 */
