@@ -94,13 +94,20 @@ function searchKeyWords() {
   inputBox.setAttribute("placeHolder", "type and search for episode");
   inputBox.style.width = "25em";
   inputBox.style.backgroundColor = "#f5f5f5";
+  
+
+  
+  
+  
   rootElem.appendChild(inputBox);
 
   inputBox.addEventListener("keyup", (event) => {
-    const searchString = event.target.value.toLowerCase();
-    let episodeContainers = document.getElementsByClassName("episodeContainerClassName");
-    let forEachIndexZero = 0; // this is index of the array for the forEach function 
-  
+    const searchString = event.target.value.toLowerCase(); // gets search string from input 
+    let episodeContainers = document.getElementsByClassName("episodeContainerClassName"); // An array of episode container 
+    let episodeIndex = 0; // this allows us to access each episode counter 
+    
+    let episodeCounter = 0; // this is the number of episodes that match the key word search string 
+
     //console.log(episodeContainers);
 
     //console.log(episodeContainers,"hello")
@@ -108,12 +115,16 @@ function searchKeyWords() {
 
       if (episode.name.toLowerCase().includes(searchString) || episode.summary.toLowerCase().includes(searchString))
       {
-        episodeContainers[forEachIndexZero].style.display = "";
+        episodeCounter++;
+        episodeContainers[episodeIndex].style.display = "";
       } else {
-        episodeContainers[forEachIndexZero].style.display = "none";
+        episodeContainers[episodeIndex].style.display = "none";
       }
-      forEachIndexZero++; // This increments 
+      
+      episodeIndex++; // This increments 
+    
     });
+    
   });
 
   /*
