@@ -2,6 +2,8 @@
 // global variables
 const rootElem = document.getElementById("root");
 
+
+
 // window onload set up
 function setup() {
   const allEpisodes = getAllEpisodes();
@@ -26,6 +28,10 @@ function formatSeasonNum(num) {
  */
 // displays a single episode
 function singleEpisode(element) {
+  let container = document.getElementsByClassName("episodeContainerClassName");
+  if (container) {
+    container.innerHTML = "";
+  }
   let episodeContainer = document.createElement("div");
   episodeContainer.className = "episodeContainerClassName";
   episodeContainer.style.backgroundColor = "#f5f5dc";
@@ -60,10 +66,7 @@ function singleEpisode(element) {
 
 // display multiple episodes + loops the data
 function displayEpisodes(elements) {
-  let container = document.getElementsByClassName("style-container");
-  if (container) {
-    container.innerHTML = "";
-  }
+  
   let styleContainer = document.createElement("div");
   styleContainer.className = "style-container";
   styleContainer.style.width = "98%";
@@ -77,7 +80,7 @@ function displayEpisodes(elements) {
 }
 
 function makePageForEpisodes(episodeList) {
-  //displayEpisodes(episodeList);
+  displayEpisodes(episodeList);
   // const rootElem = document.getElementById("root");
   //rootElem.textContent = `Got ${episodeList.length} episode(s)`;
 
@@ -88,8 +91,9 @@ function makePageForEpisodes(episodeList) {
   }
   footer();
 }
-
+          
 function searchKeyWords() {
+  
   let inputBox = document.createElement("input"); // text box
   inputBox.setAttribute("id", "inputBoxId");
   inputBox.setAttribute("placeHolder", "type and search for episode");
@@ -119,12 +123,7 @@ function searchKeyWords() {
 searchKeyWords();
 window.onload = setup;
 
-/* 
-pre task - 
-create function - create elements for search bar / access div's from html
-create a loop with a condition 
-modify the dom each time you are checking 
-*/
+
 
 /* Task 2- level 200
 Add Search#

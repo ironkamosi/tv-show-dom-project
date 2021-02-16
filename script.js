@@ -24,6 +24,7 @@ function formatSeasonNum(num) {
   
 }
  */
+
 // displays a single episode
 function singleEpisode(element) {
   let episodeContainer = document.createElement("div");
@@ -84,6 +85,7 @@ function makePageForEpisodes(episodeList) {
   footer();
 }
 
+// input search bar 
 function searchKeyWords() {
   let episodeList = getAllEpisodes();
   let inputBox = document.createElement("input");
@@ -96,10 +98,11 @@ function searchKeyWords() {
 
   inputBox.addEventListener("keyup", (event) => {
     const searchString = event.target.value.toLowerCase();
+    console.log(searchString)
     const episodeContainers = document.getElementsByClassName("episodeContainerClassName");
-    console.log(episodeContainers,"hello")
+    // console.log(episodeContainers,"hello")
     
-    episodeList.forEach((episode) => {
+    episodeList.filter((episode) => {
       let episodeContainers
       if (
         episode.name.toLowerCase().includes(searchString) ||
@@ -109,6 +112,16 @@ function searchKeyWords() {
       }
     });
   });
+
+/*
+filter key terms 
+hide elements 
+add a condition when there is "" then all episodes are displayed
+
+
+
+*/
+
   // inputBox.addEventListener('keyup', (event) => {
   //   const searchString = event.target.value.toLowerCase();
   //   const filteredCharacters = episodeList.filter((episode) => {
