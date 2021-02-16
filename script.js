@@ -95,9 +95,8 @@ function searchKeyWords() {
   inputBox.style.width = "25em";
   inputBox.style.backgroundColor = "#f5f5f5";
   
-  let counterDisplay = document.createElement("div");
+  let counterDisplay = document.createElement("div"); // counter for number of episode found in search 
   counterDisplay.setAttribute("id", "counterDisplayID");
-  counterDisplay.innerHTML
   //`number of episodes found ${}`
   
   
@@ -108,25 +107,26 @@ function searchKeyWords() {
     let episodeContainers = document.getElementsByClassName("episodeContainerClassName"); // An array of episode container 
     let episodeIndex = 0; // this allows us to access each episode counter 
     
-    let episodeCounter = 0; // this is the number of episodes that match the key word search string 
-
+    
     //console.log(episodeContainers);
+      let episodeCounter = 0; // this is the number of episodes that match the key word search string
 
     //console.log(episodeContainers,"hello")
     episodeList.forEach((episode) => {
 
-      if (episode.name.toLowerCase().includes(searchString) || episode.summary.toLowerCase().includes(searchString))
-      {
-        episodeCounter++;
+      if (
+        episode.name.toLowerCase().includes(searchString) ||
+        episode.summary.toLowerCase().includes(searchString)
+      ) {
+        episodeCounter +=1; 
         episodeContainers[episodeIndex].style.display = "";
       } else {
         episodeContainers[episodeIndex].style.display = "none";
       }
-      
-      episodeIndex++; // This increments 
-    
+      episodeIndex++; // This increments
     });
-    
+        console.log(episodeCounter);
+
   });
 
   /*
