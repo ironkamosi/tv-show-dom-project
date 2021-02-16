@@ -95,8 +95,10 @@ function searchKeyWords() {
   inputBox.style.width = "25em";
   inputBox.style.backgroundColor = "#f5f5f5";
   
-
-  
+  let counterDisplay = document.createElement("div");
+  counterDisplay.setAttribute("id", "counterDisplayID");
+  counterDisplay.innerHTML
+  //`number of episodes found ${}`
   
   
   rootElem.appendChild(inputBox);
