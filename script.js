@@ -88,7 +88,7 @@ function makePageForEpisodes(episodeList) {
 
 // counter function display
 
-function counterDisplaygit (numberOfEpisodes) { // counter for number of episode found in search
+function counterDisplay(numberOfEpisodes) { // counter for number of episode found in search
   let counterDisplay = document.createElement("div");
   counterDisplay.setAttribute("id", "counterDisplayID");
   counterDisplay.innerText = "hola, Juan"
@@ -129,8 +129,9 @@ function searchKeyWords() {
       }
       episodeIndex++; // This increments
     });
-    counterDisplaygit (episodeCounter);
+    counterDisplay(episodeCounter);
     console.log(episodeCounter);
+    console.log(episodeIndex)
   });
 
   /*
