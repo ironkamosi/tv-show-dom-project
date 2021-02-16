@@ -86,6 +86,15 @@ function makePageForEpisodes(episodeList) {
   footer();
 }
 
+// counter function display
+
+function counterDisplaygit (numberOfEpisodes) { // counter for number of episode found in search
+  let counterDisplay = document.createElement("div");
+  counterDisplay.setAttribute("id", "counterDisplayID");
+  counterDisplay.innerText = "hola, Juan"
+  //`number of episodes found ${}`
+}
+
 // input search bar
 function searchKeyWords() {
   let episodeList = getAllEpisodes();
@@ -94,39 +103,34 @@ function searchKeyWords() {
   inputBox.setAttribute("placeHolder", "type and search for episode");
   inputBox.style.width = "25em";
   inputBox.style.backgroundColor = "#f5f5f5";
-  
-  let counterDisplay = document.createElement("div"); // counter for number of episode found in search 
-  counterDisplay.setAttribute("id", "counterDisplayID");
-  //`number of episodes found ${}`
-  
-  
+
   rootElem.appendChild(inputBox);
 
   inputBox.addEventListener("keyup", (event) => {
-    const searchString = event.target.value.toLowerCase(); // gets search string from input 
-    let episodeContainers = document.getElementsByClassName("episodeContainerClassName"); // An array of episode container 
-    let episodeIndex = 0; // this allows us to access each episode counter 
-    
-    
+    const searchString = event.target.value.toLowerCase(); // gets search string from input
+    let episodeContainers = document.getElementsByClassName(
+      "episodeContainerClassName"
+    ); // An array of episode container
+    let episodeIndex = 0; // this allows us to access each episode counter
+
     //console.log(episodeContainers);
-      let episodeCounter = 0; // this is the number of episodes that match the key word search string
+    let episodeCounter = 0; // this is the number of episodes that match the key word search string
 
     //console.log(episodeContainers,"hello")
     episodeList.forEach((episode) => {
-
       if (
         episode.name.toLowerCase().includes(searchString) ||
         episode.summary.toLowerCase().includes(searchString)
       ) {
-        episodeCounter +=1; 
+        episodeCounter += 1;
         episodeContainers[episodeIndex].style.display = "";
       } else {
         episodeContainers[episodeIndex].style.display = "none";
       }
       episodeIndex++; // This increments
     });
-        console.log(episodeCounter);
-
+    counterDisplaygit (episodeCounter);
+    console.log(episodeCounter);
   });
 
   /*
