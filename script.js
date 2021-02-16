@@ -4,6 +4,10 @@ const rootElem = document.getElementById("root");
 
 // window onload set up
 function setup() {
+  let counterDisplay = document.createElement("div");
+  counterDisplay.setAttribute("id", "counterDisplayID");
+  rootElem.appendChild(counterDisplay);
+
   const allEpisodes = getAllEpisodes();
   makePageForEpisodes(allEpisodes);
 }
@@ -75,6 +79,8 @@ function displayEpisodes(elements) {
 
 // displays the episodes onto the entire page
 function makePageForEpisodes(episodeList) {
+  // attributes for counter
+
   displayEpisodes(episodeList);
   // const rootElem = document.getElementById("root");
   //rootElem.textContent = `Got ${episodeList.length} episode(s)`;
@@ -87,11 +93,12 @@ function makePageForEpisodes(episodeList) {
 }
 
 // counter function display
+function counterDisplay(numberOfEpisodes) {
+  // counter for number of episode found in search
+  let counterDisplay = document.getElementById("counterDisplayID");
+  counterDisplay.innerText = `Displaying ${numberOfEpisodes}/73 episodes`;
+  counterDisplay.style.backgroundColor = "red";
 
-function counterDisplay(numberOfEpisodes) { // counter for number of episode found in search
-  let counterDisplay = document.createElement("div");
-  counterDisplay.setAttribute("id", "counterDisplayID");
-  counterDisplay.innerText = "hola, Juan"
   //`number of episodes found ${}`
 }
 
@@ -130,8 +137,7 @@ function searchKeyWords() {
       episodeIndex++; // This increments
     });
     counterDisplay(episodeCounter);
-    console.log(episodeCounter);
-    console.log(episodeIndex)
+    console.log(episodeCounter); // test for episode counter
   });
 
   /*
