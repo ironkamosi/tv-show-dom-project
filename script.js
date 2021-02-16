@@ -27,6 +27,7 @@ function formatSeasonNum(num) {
 // displays a single episode
 function singleEpisode(element) {
   let episodeContainer = document.createElement("div");
+  episodeContainer.style.display = "block"; // dis
   episodeContainer.className = "episodeContainerClassName";
   episodeContainer.style.backgroundColor = "#f5f5dc";
   episodeContainer.style.padding = "1.5em";
@@ -97,20 +98,21 @@ function searchKeyWords() {
 
   inputBox.addEventListener("keyup", (event) => {
     const searchString = event.target.value.toLowerCase();
-    console.log(searchString);
-    const episodeContainers = document.getElementsByClassName("episodeContainerClassName");
+    let episodeContainers = document.getElementsByClassName("episodeContainerClassName");
+    let forEachIndexZero = 0; // this is index of the array for the forEach function 
+  
+    //console.log(episodeContainers);
 
     //console.log(episodeContainers,"hello")
-    episodeList.filter((episode) => {
-    let styleContainerClass = document.getElementsByClassName("style-container");
-    let episodeContainers;
+    episodeList.forEach((episode) => {
 
       if (episode.name.toLowerCase().includes(searchString) || episode.summary.toLowerCase().includes(searchString))
       {
-        styleContainerClass.style.display = "";
+        episodeContainers[forEachIndexZero].style.display = "";
       } else {
-        styleContainerClass.style.display = "none";
+        episodeContainers[forEachIndexZero].style.display = "none";
       }
+      forEachIndexZero++; // This increments 
     });
   });
 
