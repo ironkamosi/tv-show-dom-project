@@ -21,14 +21,13 @@ function formatSeasonNum(num) {
 turnery operation version 
 function formatSeasonNum(num) {
   return (num < 10) ?  "0" + num : num;
-  
 }
  */
 
 // displays a single episode
 function singleEpisode(element) {
   let episodeContainer = document.createElement("div");
-  episodeContainer.className = "episodeContainerClassName"
+  episodeContainer.className = "episodeContainerClassName";
   episodeContainer.style.backgroundColor = "#f5f5dc";
   episodeContainer.style.padding = "1.5em";
   episodeContainer.style.width = "20rem";
@@ -73,6 +72,7 @@ function displayEpisodes(elements) {
   rootElem.appendChild(styleContainer);
 }
 
+// displays the episodes onto the entire page
 function makePageForEpisodes(episodeList) {
   displayEpisodes(episodeList);
   // const rootElem = document.getElementById("root");
@@ -85,7 +85,7 @@ function makePageForEpisodes(episodeList) {
   footer();
 }
 
-// input search bar 
+// input search bar
 function searchKeyWords() {
   let episodeList = getAllEpisodes();
   let inputBox = document.createElement("input");
@@ -95,31 +95,29 @@ function searchKeyWords() {
   inputBox.style.backgroundColor = "#f5f5f5";
   rootElem.appendChild(inputBox);
 
-
   inputBox.addEventListener("keyup", (event) => {
     const searchString = event.target.value.toLowerCase();
-    console.log(searchString)
+    console.log(searchString);
     const episodeContainers = document.getElementsByClassName("episodeContainerClassName");
-    // console.log(episodeContainers,"hello")
-    
+
+    //console.log(episodeContainers,"hello")
     episodeList.filter((episode) => {
-      let episodeContainers
-      if (
-        episode.name.toLowerCase().includes(searchString) ||
-        episode.summary.toLowerCase().includes(searchString)
-      ) {
-       
+    let styleContainerClass = document.getElementsByClassName("style-container");
+    let episodeContainers;
+
+      if (episode.name.toLowerCase().includes(searchString) || episode.summary.toLowerCase().includes(searchString))
+      {
+        styleContainerClass.style.display = "";
+      } else {
+        styleContainerClass.style.display = "none";
       }
     });
   });
 
-/*
+  /*
 filter key terms 
 hide elements 
 add a condition when there is "" then all episodes are displayed
-
-
-
 */
 
   // inputBox.addEventListener('keyup', (event) => {
@@ -137,7 +135,7 @@ searchKeyWords();
 window.onload = setup;
 
 /* 
-pre task - 
+pre task - t
 create function - create elements for search bar / access div's from html
 create a loop with a condition 
 modify the dom each time you are checking 
