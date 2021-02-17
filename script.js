@@ -95,9 +95,9 @@ function makePageForEpisodes(episodeList) {
 // counter function display
 function counterDisplay(numberOfEpisodes) {
   // counter for number of episode found in search
-  let oldCounter = document.querySelector("#counterDisplayID");
-  if (oldCounter) {
-    oldCounter.remove()
+  let removeCounter = document.querySelector("#counterDisplayID");
+  if (removeCounter) {
+    removeCounter.remove()
   }
   let navBarContainer = document.querySelector("#navBarContainer");
   let counterDisplay = document.createElement("div");
