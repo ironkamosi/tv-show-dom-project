@@ -97,12 +97,11 @@ function makePageForEpisodes(episodeList) {
 function dropDownMenu(episodeList) {
   let select = document.createElement("select");
   select.setAttribute("id", "select");
+
   select.addEventListener("change", function (event) {});
   episodeList.forEach((episode) => {
     let option = document.createElement("option");
-    option.innerHTML = `${episode.name}: S${formatSeasonNum(
-      episode.season
-    )}E${formatSeasonNum(episode.number)}`;
+    option.innerHTML = `${episode.name}: S${formatSeasonNum(episode.season)}E${formatSeasonNum(episode.number)}`;
     select.appendChild(option);
   });
 
@@ -112,10 +111,6 @@ function dropDownMenu(episodeList) {
 //dropDownMenu(getAllEpisodes())
 
 /*
-
-
-
-
 Add an Episode Selector#
 Complete all requirements from level 200
 Add a select input which allows you to jump quickly to an episode:
@@ -145,6 +140,7 @@ function counterDisplay(numberOfEpisodes) {
     counterDisplay = document.createElement("div");
     counterDisplay.setAttribute("id", "counterDisplayID");
     counterDisplay.style.backgroundColor = "blue";
+    counterDisplay.style.marginTop ="0.5em" // centre below
     //counterDisplay.style.margin = "0.1em";
     navBarContainer.appendChild(counterDisplay);
   }
@@ -166,6 +162,7 @@ function searchKeyWords() {
   inputBox.setAttribute("placeHolder", "type and search for episode");
   inputBox.style.width = "25em";
   inputBox.style.backgroundColor = "#f5f5f5";
+  inputBox.style.margin = "0.8em"; // spacing to the left of episode list 
 
   let navBarContainer = document.createElement("div");
   navBarContainer.style.display = "flex";
