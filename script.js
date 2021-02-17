@@ -104,10 +104,21 @@ function dropDownMenu(episodeList) {
    
  });
   
+ select.appendChild(option)
   
-  //loop through elements + append
+ //loop through elements + append
   // `${element.name}`
-}/*
+}
+//dropDownMenu(getAllEpisodes())
+
+
+
+
+/*
+
+
+
+
 Add an Episode Selector#
 Complete all requirements from level 200
 Add a select input which allows you to jump quickly to an episode:
