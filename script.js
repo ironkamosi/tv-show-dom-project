@@ -95,11 +95,13 @@ function makePageForEpisodes(episodeList) {
 function dropDownMenu(episodeList) {
   let select = document.createElement("select");
   select.setAttribute("id", "select");
+  select.addEventListener("change", function (event) {
 
+  })
  episodeList.forEach(episode => {
    let option = document.createElement("option");
    option.innerHTML = `${episode.name}: S${formatSeasonNum(episode.season)}E${formatSeasonNum(episode.number)}`;
-   addEventListener
+   
  });
   
   
@@ -111,7 +113,8 @@ Complete all requirements from level 200
 Add a select input which allows you to jump quickly to an episode:
 The select input should list all episodes in the format: "S01E01 - Winter is Coming"
 When the user makes a selection, they should be taken directly to that episode in the list
-Bonus: if you prefer, when the select is used, ONLY show the selected episode. If you do this, be sure to provide a way for the user to see all episodes again.
+Bonus: if you prefer, when the select is used, ONLY show the selected episode. 
+If you do this, be sure to provide a way for the user to see all episodes again.
 
 
 */
