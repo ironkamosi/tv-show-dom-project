@@ -95,7 +95,7 @@ function makePageForEpisodes(episodeList) {
 // drop down menu for episodes
 
 function dropDownMenu(episodeList) {
-  // c
+  
   let navBarContainer = document.getElementById("navBarContainer");
   let option = document.createElement("option");
   let select = document.createElement("select");
@@ -107,11 +107,12 @@ function dropDownMenu(episodeList) {
     select.appendChild(option);
   });
 
-  
   select.addEventListener("change", function (event) {
+
   });
-   
-    
+  
+  
+  navBarContainer.appendChild(select)
   
 }
 //dropDownMenu(getAllEpisodes())
@@ -163,6 +164,7 @@ function counterDisplay(numberOfEpisodes) {
 // input search bar
 function searchKeyWords() {
   let episodeList = getAllEpisodes();
+  dropDownMenu(episodeList); // appends the drop down menu before the other nav bar elements 
 
   let inputBox = document.createElement("input");
   inputBox.setAttribute("id", "inputBoxId");
@@ -171,10 +173,12 @@ function searchKeyWords() {
   inputBox.style.backgroundColor = "#f5f5f5";
   inputBox.style.margin = "0.8em"; // spacing to the left of episode list
 
+
   let navBarContainer = document.createElement("div");
   navBarContainer.style.display = "flex";
   navBarContainer.setAttribute("id", "navBarContainer");
 
+  rootElem.appendChild()
   navBarContainer.appendChild(inputBox);
   rootElem.appendChild(navBarContainer);
   counterDisplay(getAllEpisodes().length); // this calls the number of items in the array
