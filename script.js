@@ -138,21 +138,20 @@ function counterDisplay(numberOfEpisodes) {
   // counter for number of episode found in search
   // let counterDisplay;
   let counterDisplay = document.querySelector("#counterDisplayID");
-  
+  let navBarContainer = document.querySelector("#navBarContainer");
+
   // if (removeCounter) {
   //   removeCounter.remove()
   // }
 
   if (counterDisplay=== undefined) {
-  //let counterDisplay = document.createElement("div");
+  let counterDisplay = document.createElement("div");
   counterDisplay.setAttribute("id", "counterDisplayID");
   counterDisplay.style.backgroundColor = "blue";
   counterDisplay.style.margin = "0.5em";
   navBarContainer.appendChild(counterDisplay);
-
   }
   
-  let navBarContainer = document.querySelector("#navBarContainer");
  
   // rootElem.appendChild(counterDisplay);
   //let counterDisplay = document.getElementById("counterDisplayID");
