@@ -144,18 +144,18 @@ function counterDisplay(numberOfEpisodes) {
   //   removeCounter.remove()
   // }
 
-  if (counterDisplay=== undefined) {
-  let counterDisplay = document.createElement("div");
-  counterDisplay.setAttribute("id", "counterDisplayID");
-  counterDisplay.style.backgroundColor = "blue";
-  counterDisplay.style.margin = "0.5em";
-  navBarContainer.appendChild(counterDisplay);
+  if (counterDisplay === undefined) {
+    // if the counter doesnt exist it creates a counter then update
+    let counterDisplay = document.createElement("div");
+    counterDisplay.setAttribute("id", "counterDisplayID");
+    counterDisplay.style.backgroundColor = "blue";
+    counterDisplay.style.margin = "0.5em";
+    navBarContainer.appendChild(counterDisplay);
   }
-  
- 
+// find the source for num of episodes for GOT
   // rootElem.appendChild(counterDisplay);
   //let counterDisplay = document.getElementById("counterDisplayID");
-  counterDisplay.innerText = `Displaying ${numberOfEpisodes}/73 episodes`;
+  counterDisplay.innerText = `Displaying ${numberOfEpisodes}/ 73 episodes`; // update of the counter 
   //counterDisplay.style.backgroundColor = "red";
 
   //`number of episodes found ${}`
