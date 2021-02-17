@@ -4,9 +4,9 @@ const rootElem = document.getElementById("root");
 
 // window onload set up
 function setup() {
-  let counterDisplay = document.createElement("div");
-  counterDisplay.setAttribute("id", "counterDisplayID");
-  rootElem.appendChild(counterDisplay);
+  // let counterDisplay = document.createElement("div");
+  // counterDisplay.setAttribute("id", "counterDisplayID");
+  // rootElem.appendChild(counterDisplay);
 
   const allEpisodes = getAllEpisodes();
   makePageForEpisodes(allEpisodes);
@@ -95,9 +95,18 @@ function makePageForEpisodes(episodeList) {
 // counter function display
 function counterDisplay(numberOfEpisodes) {
   // counter for number of episode found in search
-  let counterDisplay = document.getElementById("counterDisplayID");
+  let oldCounter = document.querySelector("#counterDisplayID");
+  if (oldCounter) {
+    oldCounter.remove()
+  }
+  let navBarContainer = document.querySelector("#navBarContainer");
+  let counterDisplay = document.createElement("div");
+  counterDisplay.setAttribute("id", "counterDisplayID");
+  // rootElem.appendChild(counterDisplay);
+  //let counterDisplay = document.getElementById("counterDisplayID");
   counterDisplay.innerText = `Displaying ${numberOfEpisodes}/73 episodes`;
   counterDisplay.style.backgroundColor = "red";
+  navBarContainer.appendChild(counterDisplay);
 
   //`number of episodes found ${}`
 }
@@ -106,15 +115,16 @@ function counterDisplay(numberOfEpisodes) {
 function searchKeyWords() {
   let episodeList = getAllEpisodes();
   let navBarContainer = document.createElement("div");
+  navBarContainer.style.display ="flex"
   navBarContainer.setAttribute("id", "navBarContainer");
-  
+
   let inputBox = document.createElement("input");
   inputBox.setAttribute("id", "inputBoxId");
   inputBox.setAttribute("placeHolder", "type and search for episode");
   inputBox.style.width = "25em";
   inputBox.style.backgroundColor = "#f5f5f5";
-  
-  navBarContainer.appendChild(inputBox)
+
+  navBarContainer.appendChild(inputBox);
   rootElem.appendChild(navBarContainer);
 
   inputBox.addEventListener("keyup", (event) => {
