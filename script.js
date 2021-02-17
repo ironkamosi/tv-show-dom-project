@@ -40,9 +40,7 @@ function singleEpisode(element) {
 
   let title = document.createElement("h2");
   title.style.textAlign = "center";
-  title.innerHTML = `${element.name}: S${formatSeasonNum(
-    element.season
-  )}E${formatSeasonNum(element.number)}`;
+  title.innerHTML = `${element.name}: S${formatSeasonNum(element.season)}E${formatSeasonNum(element.number)}`;
   title.className = "title";
 
   let img = document.createElement("img");
@@ -92,6 +90,36 @@ function makePageForEpisodes(episodeList) {
   footer();
 }
 
+// drop down menu for episodes
+
+function dropDownMenu(episodeList) {
+  let select = document.createElement("select");
+  select.setAttribute("id", "select");
+
+ episodeList.forEach(episode => {
+   let option = document.createElement("option");
+   option.innerHTML = `${episode.name}: S${formatSeasonNum(episode.season)}E${formatSeasonNum(episode.number)}`;
+   addEventListener
+ });
+  
+  
+  //loop through elements + append
+  // `${element.name}`
+}/*
+Add an Episode Selector#
+Complete all requirements from level 200
+Add a select input which allows you to jump quickly to an episode:
+The select input should list all episodes in the format: "S01E01 - Winter is Coming"
+When the user makes a selection, they should be taken directly to that episode in the list
+Bonus: if you prefer, when the select is used, ONLY show the selected episode. If you do this, be sure to provide a way for the user to see all episodes again.
+
+
+*/
+
+
+
+
+
 // counter function display
 function counterDisplay(numberOfEpisodes) {
   // counter for number of episode found in search
@@ -115,7 +143,7 @@ function counterDisplay(numberOfEpisodes) {
 function searchKeyWords() {
   let episodeList = getAllEpisodes();
   let navBarContainer = document.createElement("div");
-  navBarContainer.style.display ="flex"
+  navBarContainer.style.display = "flex";
   navBarContainer.setAttribute("id", "navBarContainer");
 
   let inputBox = document.createElement("input");
@@ -153,6 +181,8 @@ function searchKeyWords() {
     counterDisplay(episodeCounter);
     console.log(episodeCounter); // test for episode counter
   });
+
+  
 
   /*
 filter key terms 
