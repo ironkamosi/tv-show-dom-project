@@ -105,13 +105,17 @@ function counterDisplay(numberOfEpisodes) {
 // input search bar
 function searchKeyWords() {
   let episodeList = getAllEpisodes();
+  let navBarContainer = document.createElement("div");
+  navBarContainer.setAttribute("id", "navBarContainer");
+  
   let inputBox = document.createElement("input");
   inputBox.setAttribute("id", "inputBoxId");
   inputBox.setAttribute("placeHolder", "type and search for episode");
   inputBox.style.width = "25em";
   inputBox.style.backgroundColor = "#f5f5f5";
-
-  rootElem.appendChild(inputBox);
+  
+  navBarContainer.appendChild(inputBox)
+  rootElem.appendChild(navBarContainer);
 
   inputBox.addEventListener("keyup", (event) => {
     const searchString = event.target.value.toLowerCase(); // gets search string from input
