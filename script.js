@@ -101,10 +101,9 @@ function dropDownMenu(episodeList) {
  episodeList.forEach(episode => {
    let option = document.createElement("option");
    option.innerHTML = `${episode.name}: S${formatSeasonNum(episode.season)}E${formatSeasonNum(episode.number)}`;
-   
+    select.appendChild(option)
  });
   
- select.appendChild(option)
   
  //loop through elements + append
   // `${element.name}`
