@@ -40,7 +40,9 @@ function singleEpisode(element) {
 
   let title = document.createElement("h2");
   title.style.textAlign = "center";
-  title.innerHTML = `${element.name}: S${formatSeasonNum(element.season)}E${formatSeasonNum(element.number)}`;
+  title.innerHTML = `${element.name}: S${formatSeasonNum(
+    element.season
+  )}E${formatSeasonNum(element.number)}`;
   title.className = "title";
 
   let img = document.createElement("img");
@@ -95,23 +97,19 @@ function makePageForEpisodes(episodeList) {
 function dropDownMenu(episodeList) {
   let select = document.createElement("select");
   select.setAttribute("id", "select");
-  select.addEventListener("change", function (event) {
+  select.addEventListener("change", function (event) {});
+  episodeList.forEach((episode) => {
+    let option = document.createElement("option");
+    option.innerHTML = `${episode.name}: S${formatSeasonNum(
+      episode.season
+    )}E${formatSeasonNum(episode.number)}`;
+    select.appendChild(option);
+  });
 
-  })
- episodeList.forEach(episode => {
-   let option = document.createElement("option");
-   option.innerHTML = `${episode.name}: S${formatSeasonNum(episode.season)}E${formatSeasonNum(episode.number)}`;
-    select.appendChild(option)
- });
-  
-  
- //loop through elements + append
+  //loop through elements + append
   // `${element.name}`
 }
 //dropDownMenu(getAllEpisodes())
-
-
-
 
 /*
 
@@ -129,33 +127,31 @@ If you do this, be sure to provide a way for the user to see all episodes again.
 
 */
 
-
-
-
-
 // counter function display
 function counterDisplay(numberOfEpisodes) {
   // counter for number of episode found in search
   // let counterDisplay;
+
   let counterDisplay = document.querySelector("#counterDisplayID");
-  let navBarContainer = document.querySelector("#navBarContainer");
+  let navBarContainer = document.getElementById("navBarContainer");
 
   // if (removeCounter) {
   //   removeCounter.remove()
   // }
+  console.log("counterDisplay", counterDisplay);
+  if (counterDisplay === null) {
+    // if the counter doesn't exist it creates a counter then update
 
-  if (counterDisplay === undefined) {
-    // if the counter doesnt exist it creates a counter then update
-    let counterDisplay = document.createElement("div");
+    counterDisplay = document.createElement("div");
     counterDisplay.setAttribute("id", "counterDisplayID");
     counterDisplay.style.backgroundColor = "blue";
-    counterDisplay.style.margin = "0.5em";
+    //counterDisplay.style.margin = "0.1em";
     navBarContainer.appendChild(counterDisplay);
   }
-// find the source for num of episodes for GOT
+  // find the source for num of episodes for GOT
   // rootElem.appendChild(counterDisplay);
   //let counterDisplay = document.getElementById("counterDisplayID");
-  counterDisplay.innerText = `Displaying ${numberOfEpisodes}/ 73 episodes`; // update of the counter 
+  counterDisplay.innerText = `Displaying ${numberOfEpisodes}/ 73 episodes`; // update of the counter
   //counterDisplay.style.backgroundColor = "red";
 
   //`number of episodes found ${}`
@@ -164,9 +160,6 @@ function counterDisplay(numberOfEpisodes) {
 // input search bar
 function searchKeyWords() {
   let episodeList = getAllEpisodes();
-  let navBarContainer = document.createElement("div");
-  navBarContainer.style.display = "flex";
-  navBarContainer.setAttribute("id", "navBarContainer");
 
   let inputBox = document.createElement("input");
   inputBox.setAttribute("id", "inputBoxId");
@@ -174,8 +167,14 @@ function searchKeyWords() {
   inputBox.style.width = "25em";
   inputBox.style.backgroundColor = "#f5f5f5";
 
+  let navBarContainer = document.createElement("div");
+  navBarContainer.style.display = "flex";
+  navBarContainer.setAttribute("id", "navBarContainer");
+  
   navBarContainer.appendChild(inputBox);
   rootElem.appendChild(navBarContainer);
+  counterDisplay(getAllEpisodes().length); // this calls the number of items in the array
+  
 
   inputBox.addEventListener("keyup", (event) => {
     const searchString = event.target.value.toLowerCase(); // gets search string from input
@@ -201,10 +200,8 @@ function searchKeyWords() {
       episodeIndex++; // This increments
     });
     counterDisplay(episodeCounter);
-    console.log(episodeCounter); // test for episode counter
+    // console.log(episodeCounter); // test for episode counter
   });
-
-  
 
   /*
 filter key terms 
