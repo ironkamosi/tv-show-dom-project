@@ -7,7 +7,6 @@ function setup() {
   // let counterDisplay = document.createElement("div");
   // counterDisplay.setAttribute("id", "counterDisplayID");
   // rootElem.appendChild(counterDisplay);
-
   const allEpisodes = getAllEpisodes();
   makePageForEpisodes(allEpisodes);
 }
@@ -80,10 +79,10 @@ function displayEpisodes(elements) {
 // displays the episodes onto the entire page
 function makePageForEpisodes(episodeList) {
   // attributes for counter
-
+  
   displayEpisodes(episodeList);
-  // const rootElem = document.getElementById("root");
-  //rootElem.textContent = `Got ${episodeList.length} episode(s)`;
+  searchKeyWords();
+
   function footer() {
     let footer = document.createElement("footer");
     footer.innerHTML = "<p>https://tvmaze.com/</p>";
@@ -93,27 +92,53 @@ function makePageForEpisodes(episodeList) {
 }
 
 // drop down menu for episodes
-
 function dropDownMenu(episodeList) {
-  
+  let episodeContainers = document.getElementsByClassName("episodeContainerClassName"); // An array of episode container
   let navBarContainer = document.getElementById("navBarContainer");
-  let option = document.createElement("option");
   let select = document.createElement("select");
   select.setAttribute("id", "select");
-  
-  
+
+  let option = document.createElement("option");
+  option.innerText = "All episodes";
+  select.appendChild(option);
+
   episodeList.forEach((episode) => {
-    option.innerHTML = `${episode.name}: S${formatSeasonNum(episode.season)}E${formatSeasonNum(episode.number)}`;
+    let option = document.createElement("option");
+    option.innerHTML = `${episode.name}: S${formatSeasonNum(
+      episode.season
+    )}E${formatSeasonNum(episode.number)}`;
     select.appendChild(option);
   });
 
-  select.addEventListener("change", function (event) {
+  
 
+  select.addEventListener("change", function (event) {
+    let episodeIndex = 0;
+    let episodeCounter = 0;
+    if (event.target.options[event.target.selectedIndex].index === 0) {
+      episodeList.forEach(() => {
+        episodeCounter += 1;
+        episodeContainers[episodeIndex].style.display = "";
+        episodeIndex++; // This increments});
+      });
+    } else {
+      episodeList.forEach(() => {
+        if (
+          episodeCounter === event.target.options[event.target.selectedIndex].index - 1
+        ) {
+          episodeContainers[episodeIndex].style.display = "";
+        } else {
+          episodeContainers[episodeIndex].style.display = "none";
+        }
+        episodeCounter += 1;
+        episodeIndex++; // This increments});
+      });
+    }
+    // console.log(event.target.options[event.target.selectedIndex].index);
+    // console.log(event);
   });
-  
-  
-  navBarContainer.appendChild(select)
-  
+
+  navBarContainer.appendChild(select);
 }
 //dropDownMenu(getAllEpisodes())
 
@@ -140,7 +165,7 @@ function counterDisplay(numberOfEpisodes) {
   // if (removeCounter) {
   //   removeCounter.remove()
   // }
-  console.log("counterDisplay", counterDisplay);
+  // console.log("counterDisplay", counterDisplay);
   if (counterDisplay === null) {
     // if the counter doesn't exist it creates a counter then update
 
@@ -163,8 +188,16 @@ function counterDisplay(numberOfEpisodes) {
 
 // input search bar
 function searchKeyWords() {
+  let navBarContainer = document.createElement("div");
+  let body = document.querySelector("body");
+
+  navBarContainer.style.display = "flex";
+  navBarContainer.setAttribute("id", "navBarContainer");
+  body.insertBefore(navBarContainer,rootElem)
+  //rootElem.appendChild(navBarContainer);
+
   let episodeList = getAllEpisodes();
-  dropDownMenu(episodeList); // appends the drop down menu before the other nav bar elements 
+  dropDownMenu(episodeList); // appends the drop down menu before the other nav bar elements
 
   let inputBox = document.createElement("input");
   inputBox.setAttribute("id", "inputBoxId");
@@ -173,23 +206,15 @@ function searchKeyWords() {
   inputBox.style.backgroundColor = "#f5f5f5";
   inputBox.style.margin = "0.8em"; // spacing to the left of episode list
 
-
-  let navBarContainer = document.createElement("div");
-  navBarContainer.style.display = "flex";
-  navBarContainer.setAttribute("id", "navBarContainer");
-
-  rootElem.appendChild()
   navBarContainer.appendChild(inputBox);
-  rootElem.appendChild(navBarContainer);
+  // rootElem.appendChild(navBarContainer);
   counterDisplay(getAllEpisodes().length); // this calls the number of items in the array
 
   inputBox.addEventListener("keyup", (event) => {
     const searchString = event.target.value.toLowerCase(); // gets search string from input
-    let episodeContainers = document.getElementsByClassName(
-      "episodeContainerClassName"
-    ); // An array of episode container
+    let episodeContainers = document.getElementsByClassName("episodeContainerClassName"); // An array of episode container
     let episodeIndex = 0; // this allows us to access each episode counter
-
+    
     //console.log(episodeContainers);
     let episodeCounter = 0; // this is the number of episodes that match the key word search string
 
@@ -227,7 +252,7 @@ add a condition when there is "" then all episodes are displayed
   //   });
   // });
 }
-searchKeyWords();
+// searchKeyWords();
 window.onload = setup;
 
 /* 
