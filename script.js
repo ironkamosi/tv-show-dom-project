@@ -4,9 +4,6 @@ const rootElem = document.getElementById("root");
 
 // window onload set up
 function setup() {
-  // let counterDisplay = document.createElement("div");
-  // counterDisplay.setAttribute("id", "counterDisplayID");
-  // rootElem.appendChild(counterDisplay);
   const allEpisodes = getAllEpisodes();
   makePageForEpisodes(allEpisodes);
 }
@@ -140,24 +137,12 @@ function dropDownMenu(episodeList) {
 
   navBarContainer.appendChild(select);
 }
-//dropDownMenu(getAllEpisodes())
 
-/*
-Add an Episode Selector#
-Complete all requirements from level 200
-Add a select input which allows you to jump quickly to an episode:
-The select input should list all episodes in the format: "S01E01 - Winter is Coming"
-When the user makes a selection, they should be taken directly to that episode in the list
-Bonus: if you prefer, when the select is used, ONLY show the selected episode. 
-If you do this, be sure to provide a way for the user to see all episodes again.
-
-
-*/
 
 // counter function display
 function counterDisplay(numberOfEpisodes) {
   // counter for number of episode found in search
-  // let counterDisplay;
+ 
 
   let counterDisplay = document.querySelector("#counterDisplayID");
   let navBarContainer = document.getElementById("navBarContainer");
@@ -174,15 +159,13 @@ function counterDisplay(numberOfEpisodes) {
     counterDisplay.style.backgroundColor = "blue";
     counterDisplay.style.marginTop = "0.5em"; // centre below
     //counterDisplay.style.margin = "0.1em";
-
+   
     navBarContainer.appendChild(counterDisplay);
   }
   // find the source for num of episodes for GOT
-  // rootElem.appendChild(counterDisplay);
-  //let counterDisplay = document.getElementById("counterDisplayID");
-  counterDisplay.innerText = `Displaying ${numberOfEpisodes}/ 73 episodes`; // update of the counter
+  counterDisplay.innerText = `Displaying ${numberOfEpisodes}/ ${getAllEpisodes().length} episodes`; // update of the counter
   //counterDisplay.style.backgroundColor = "red";
-
+   console.log("test", getAllEpisodes().length);
   //`number of episodes found ${}`
 }
 
@@ -209,7 +192,7 @@ function searchKeyWords() {
   navBarContainer.appendChild(inputBox);
   // rootElem.appendChild(navBarContainer);
   counterDisplay(getAllEpisodes().length); // this calls the number of items in the array
-
+  
   inputBox.addEventListener("keyup", (event) => {
     const searchString = event.target.value.toLowerCase(); // gets search string from input
     let episodeContainers = document.getElementsByClassName("episodeContainerClassName"); // An array of episode container
