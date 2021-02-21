@@ -4,18 +4,17 @@ const rootElem = document.getElementById("root");
 
 // window onload set up
 function setup() {
-  // const allEpisodes = getAllEpisodes();
+  const allEpisodes = getAllEpisodes();
+   fetch("https://api.tvmaze.com/shows/82/episodes")
+     .then((response) => response.json().then((data) => data))
+     .then((allEpisodes) => makePageForEpisodes(allEpisodes))
+     .catch((error) => console.log(error));
   // makePageForEpisodes(allEpisodes);
 }
 
 // API get function 
 function getAllEpisodes() {
-  fetch
-    ("https://api.tvmaze.com/shows/82/episodes")
-    .then(response => response.json().then
-      (data => data))
-    .then(allEpisodes => makePageForEpisodes(allEpisodes))
-    .catch(error => console.log(error));
+ 
 };
 
 
