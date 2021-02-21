@@ -106,7 +106,7 @@ function dropDownMenu(episodeList) {
     )}E${formatSeasonNum(episode.number)}`;
     select.appendChild(option);
   });
-
+ 
   
 
   select.addEventListener("change", function (event) {
@@ -131,7 +131,9 @@ function dropDownMenu(episodeList) {
         episodeIndex++; // This increments});
       });
     }
-    // console.log(event.target.options[event.target.selectedIndex].index);
+    //console.log("episode counter", episodeCounter)
+    // console.log("counter display",counterDisplay(event.target))
+    console.log(event.target.options[event.target.selectedIndex].index);
     // console.log(event);
   });
 
@@ -142,31 +144,31 @@ function dropDownMenu(episodeList) {
 // counter function display
 function counterDisplay(numberOfEpisodes) {
   // counter for number of episode found in search
- 
-
   let counterDisplay = document.querySelector("#counterDisplayID");
   let navBarContainer = document.getElementById("navBarContainer");
-
+  let event;
+  let target;
   // if (removeCounter) {
   //   removeCounter.remove()
   // }
   // console.log("counterDisplay", counterDisplay);
   if (counterDisplay === null) {
     // if the counter doesn't exist it creates a counter then update
-
     counterDisplay = document.createElement("div");
     counterDisplay.setAttribute("id", "counterDisplayID");
     counterDisplay.style.backgroundColor = "blue";
     counterDisplay.style.marginTop = "0.5em"; // centre below
     //counterDisplay.style.margin = "0.1em";
-   
     navBarContainer.appendChild(counterDisplay);
   }
   // find the source for num of episodes for GOT
   counterDisplay.innerText = `Displaying ${numberOfEpisodes}/ ${getAllEpisodes().length} episodes`; // update of the counter
   //counterDisplay.style.backgroundColor = "red";
-   console.log("test", getAllEpisodes().length);
   //`number of episodes found ${}`
+  //console.log("test", numberOfEpisodes)
+
+  // console.log(event.target.options[event.target.selectedIndex].index);
+
 }
 
 // input search bar
@@ -215,7 +217,7 @@ function searchKeyWords() {
       episodeIndex++; // This increments
     });
     counterDisplay(episodeCounter);
-    // console.log(episodeCounter); // test for episode counter
+    console.log("episode counter",episodeCounter); // test for episode counter
   });
 
   /*
