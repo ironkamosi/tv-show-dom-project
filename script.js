@@ -5,25 +5,8 @@ const rootElem = document.getElementById("root");
 // window onload set up
 function setup() {
   const allEpisodes = getAllEpisodes();
-   fetch("https://api.tvmaze.com/shows/82/episodes")
-     .then((response) => response.json().then((data) => data))
-     .then((allEpisodes) => makePageForEpisodes(allEpisodes))
-     .catch((error) => console.log(error));
-  // makePageForEpisodes(allEpisodes);
+  makePageForEpisodes(allEpisodes);
 }
-
-// API get function 
-function getAllEpisodes() {
- 
-};
-
-
-
-
-
-
-
-
 
 // formats the number for the season data
 function formatSeasonNum(num) {
@@ -184,7 +167,7 @@ function counterDisplay(numberOfEpisodes) {
   //`number of episodes found ${}`
   //console.log("test", numberOfEpisodes)
 
-  // console.log(event.target.options[event.target.selectedIndex].index);
+ // console.log(event.target.options[event.target.selectedIndex].index);
 
 }
 
