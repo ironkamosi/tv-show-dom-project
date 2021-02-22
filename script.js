@@ -5,10 +5,16 @@ const addFooter = () => {
   let footer = document.createElement("footer")
   footer.innerHTML = "<p>https://tvmaze.com/</p>";
   rootElem.appendChild(footer);
-}
+};
+
+const hideEpisode = episode => {
+  episode.style.display = "none";
+};
 
 
-const rootElem = document.getElementById("root");
+const showEpisode = episode => {
+  episode.style.display = "";
+};
 
 // formats the number for the season data
 function formatSeasonNum(num) {
