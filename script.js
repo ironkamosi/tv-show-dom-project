@@ -1,5 +1,61 @@
 //You can edit ALL of the code here
-const addFooter = (_) => {
+
+// tv input selector 
+
+function tvShowDropDown (episodeList){
+  let select = document.createElement("select");
+  select.setAttribute("id", "select");
+
+  let option = document.createElement("option");
+  option.innerText = "All episodes";
+  select.appendChild(option);
+
+  episodeList.forEach((episode) => {
+    let option = document.createElement("option");
+    option.innerHTML = `${episode.name}: S${formatSeasonNum(
+      episode.season
+    )}E${formatSeasonNum(episode.number)}`;
+    select.appendChild(option);
+  });
+
+  select.addEventListener("change", function (event) {
+    let episodeContainers = document.getElementsByClassName(
+      "episode-container-class-name"
+    ); // An array of episode container
+    //let navBarContainer = document.getElementById("navBarContainer");
+    let episodeIndex = 0;
+    let episodeCounter = 0;
+    if (event.target.options[event.target.selectedIndex].index === 0) {
+      // refers to the all episode option
+      episodeList.forEach(() => {
+        episodeCounter = episodeList.length;
+        episodeContainers[episodeIndex].style.display = "";
+        episodeIndex++; // This increments});
+      });
+    } else {
+      episodeList.forEach(() => {
+        if (
+          episodeIndex ===
+          event.target.options[event.target.selectedIndex].index - 1 // test if the current index is equal to the index
+        ) {
+          showEpisode(episodeContainers[episodeIndex]); //.style.display = "";
+        } else {
+          hideEpisode(episodeContainers[episodeIndex]); //.style.display = "none";
+        }
+        episodeIndex++; // This increments});
+      });
+      episodeCounter = 1;
+    }
+    updateCounter(episodeCounter, episodeList.length);
+  });
+  return select;
+};
+
+
+
+
+
+function addFooter () {
   const rootElem = document.getElementById("root");
   let footer = document.createElement("footer");
   footer.innerHTML = "<p>https://tvmaze.com/</p>";
@@ -200,12 +256,6 @@ fetch("https://api.tvmaze.com/shows/82/episodes")
   .then((response) => response.json().then((data) => data))
   .then((allEpisodes) => makePageForEpisodes(allEpisodes))
   .catch((error) => console.log(error));
-
-// old syntax
-  // const allEpisodes = getAllEpisodes();
-  
-  // makePageForEpisodes(allEpisodes);
 }
-// global variables
-//const rootElem = document.getElementById("root");
+
 window.onload = setup;
