@@ -95,7 +95,7 @@ const addDropDownMenu = (episodeList) => {
     //let navBarContainer = document.getElementById("navBarContainer");
     let episodeIndex = 0;
     let episodeCounter = 0;
-    if (event.target.options[event.target.selectedIndex].index === 0) {
+    if (event.target.options[event.target.selectedIndex].index === 0) { // refers to the all episode option
       episodeList.forEach(() => {
         episodeCounter = episodeList.length;
         episodeContainers[episodeIndex].style.display = "";
@@ -105,7 +105,7 @@ const addDropDownMenu = (episodeList) => {
       episodeList.forEach(() => {
         if (
           episodeIndex ===
-          event.target.options[event.target.selectedIndex].index - 1
+          event.target.options[event.target.selectedIndex].index - 1 // test if the current index is equal to the index 
         ) {
           showEpisode(episodeContainers[episodeIndex]); //.style.display = "";
         } else {
@@ -196,8 +196,15 @@ function makePageForEpisodes(episodeList) {
 }
 
 function setup() {
-  const allEpisodes = getAllEpisodes();
-  makePageForEpisodes(allEpisodes);
+fetch("https://api.tvmaze.com/shows/82/episodes")
+  .then((response) => response.json().then((data) => data))
+  .then((allEpisodes) => makePageForEpisodes(allEpisodes))
+  .catch((error) => console.log(error));
+
+// old syntax
+  // const allEpisodes = getAllEpisodes();
+  
+  // makePageForEpisodes(allEpisodes);
 }
 // global variables
 //const rootElem = document.getElementById("root");
