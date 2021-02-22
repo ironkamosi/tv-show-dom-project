@@ -75,7 +75,7 @@ function addAllEpisodes(elements) {
 }
 
 
-const dropDownMenu = (episodeList) => {
+const addDropDownMenu = (episodeList) => {
   let select = document.createElement("select");
   select.setAttribute("id", "select");
 
@@ -91,7 +91,9 @@ const dropDownMenu = (episodeList) => {
     select.appendChild(option);
   });
 
-   select.addEventListener("change", function (event) {
+  select.addEventListener("change", function (event) {
+     let episodeContainers = document.getElementsByClassName("episode-container-class-name"); // An array of episode container
+    
      let episodeIndex = 0;
      let episodeCounter = 0;
      if (event.target.options[event.target.selectedIndex].index === 0) {
@@ -102,18 +104,16 @@ const dropDownMenu = (episodeList) => {
        });
      } else {
        episodeList.forEach(() => {
-         if (
-           episodeCounter ===
-           event.target.options[event.target.selectedIndex].index - 1
-         ) {
-           episodeContainers[episodeIndex].style.display = "";
+         if (episodeCounter === event.target.options[event.target.selectedIndex].index - 1) {
+       showEpisode(episodeContainers[episodeIndex].style.display = "")
          } else {
-           episodeContainers[episodeIndex].style.display = "none";
+        hideEpisode(episodeContainers[episodeIndex].style.display = "none");   
          }
-         episodeCounter += 1;
          episodeIndex++; // This increments});
        });
-     }
+        episodeCounter += 1;
+    }
+    
    });
   
 };
