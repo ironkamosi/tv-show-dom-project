@@ -74,20 +74,7 @@ function addAllEpisodes(elements) {
   rootElem.appendChild(styleContainer);
 }
 
-// displays the episodes onto the entire page
-function makePageForEpisodes(episodeList) {
-  // attributes for counter
-  
-  displayEpisodes(episodeList);
-  searchKeyWords();
 
-  function footer() {
-    let footer = document.createElement("footer");
-    footer.innerHTML = "<p>https://tvmaze.com/</p>";
-    rootElem.appendChild(footer);
-  }
-  footer();
-}
 
 // drop down menu for episodes
 function dropDownMenu(episodeList) {
@@ -214,6 +201,24 @@ function searchKeyWords() {
   });
 
 }
+
+
+// displays the episodes onto the entire page
+function makePageForEpisodes(episodeList) {
+  // attributes for counter
+  
+  displayEpisodes(episodeList);
+  searchKeyWords();
+
+  function footer() {
+    let footer = document.createElement("footer");
+    footer.innerHTML = "<p>https://tvmaze.com/</p>";
+    rootElem.appendChild(footer);
+  }
+  footer();
+}
+
+
 
 // window onload set up
 function setup() {
