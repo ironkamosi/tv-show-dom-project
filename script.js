@@ -10,8 +10,6 @@ const addFooter = () => {
 
 const rootElem = document.getElementById("root");
 
-
-
 // formats the number for the season data
 function formatSeasonNum(num) {
   if (num < 10) {
@@ -20,13 +18,6 @@ function formatSeasonNum(num) {
     return num;
   }
 }
-
-/* 
-turnery operation version 
-function formatSeasonNum(num) {
-  return (num < 10) ?  "0" + num : num;
-}
- */
 
 // displays a single episode
 function singleEpisode(element) {
@@ -48,8 +39,6 @@ function singleEpisode(element) {
   let img = document.createElement("img");
   img.style.margin = "0 auto";
   img.style.width = "99%";
-  // img.style.paddingLeft = "2em";
-  // img.style.paddingRight = "2em";
   img.src = element.image.medium;
 
   let summary = document.createElement("p");
@@ -135,8 +124,7 @@ function dropDownMenu(episodeList) {
         episodeIndex++; // This increments});
       });
     }
-    //console.log("episode counter", episodeCounter)
-    // console.log("counter display",counterDisplay(event.target))
+ 
     console.log(event.target.options[event.target.selectedIndex].index);
     // console.log(event);
   });
@@ -167,11 +155,7 @@ function counterDisplay(numberOfEpisodes) {
   }
   // find the source for num of episodes for GOT
   counterDisplay.innerText = `Displaying ${numberOfEpisodes}/ ${getAllEpisodes().length} episodes`; // update of the counter
-  //counterDisplay.style.backgroundColor = "red";
-  //`number of episodes found ${}`
-  //console.log("test", numberOfEpisodes)
 
- // console.log(event.target.options[event.target.selectedIndex].index);
 
 }
 
@@ -183,7 +167,6 @@ function searchKeyWords() {
   navBarContainer.style.display = "flex";
   navBarContainer.setAttribute("id", "navBarContainer");
   body.insertBefore(navBarContainer,rootElem)
-  //rootElem.appendChild(navBarContainer);
 
   let episodeList = getAllEpisodes();
   dropDownMenu(episodeList); // appends the drop down menu before the other nav bar elements
@@ -204,10 +187,8 @@ function searchKeyWords() {
     let episodeContainers = document.getElementsByClassName("episodeContainerClassName"); // An array of episode container
     let episodeIndex = 0; // this allows us to access each episode counter
     
-    //console.log(episodeContainers);
     let episodeCounter = 0; // this is the number of episodes that match the key word search string
 
-    //console.log(episodeContainers,"hello")
     episodeList.forEach((episode) => {
       if (
         episode.name.toLowerCase().includes(searchString) ||
@@ -224,24 +205,7 @@ function searchKeyWords() {
     console.log("episode counter",episodeCounter); // test for episode counter
   });
 
-  /*
-filter key terms 
-hide elements 
-add a condition when there is "" then all episodes are displayed
-*/
-
-  // inputBox.addEventListener('keyup', (event) => {
-  //   const searchString = event.target.value.toLowerCase();
-  //   const filteredCharacters = episodeList.filter((episode) => {
-  //     return (
-  //       episode.name.toLowerCase().includes(searchString) ||
-  //       episode.summary.toLowerCase().includes(searchString)
-  //     );
-
-  //   });
-  // });
 }
-// searchKeyWords();
 
 // window onload set up
 function setup() {
