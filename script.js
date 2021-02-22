@@ -7,12 +7,12 @@ const addFooter = () => {
   rootElem.appendChild(footer);
 };
 
-// hides episode from the display
+
 const hideEpisode = (episode) => {
   episode.style.display = "none";
 };
 
-// shows episode on the display
+
 const showEpisode = (episode) => {
   episode.style.display = "";
 };
@@ -27,7 +27,7 @@ function formatSeasonNum(num) {
 }
 
 // displays a single episode
-function singleEpisode(element) {
+function addsingleEpisode(element) {
   let episodeContainer = document.createElement("div");
   episodeContainer.style.display = "block"; // dis
   episodeContainer.className = "episodeContainerClassName";
@@ -69,7 +69,7 @@ function addAllEpisodes(elements) {
   styleContainer.style.margin = "0 auto";
 
   elements.forEach((element) => {
-    styleContainer.appendChild(singleEpisode(element));
+    styleContainer.appendChild(addSingleEpisode(element));
   });
   rootElem.appendChild(styleContainer);
 }
@@ -93,29 +93,28 @@ const addDropDownMenu = (episodeList) => {
 
   select.addEventListener("change", function (event) {
      let episodeContainers = document.getElementsByClassName("episode-container-class-name"); // An array of episode container
-    
      let episodeIndex = 0;
      let episodeCounter = 0;
-     if (event.target.options[event.target.selectedIndex].index === 0) {
+    if (event.target.options[event.target.selectedIndex].index === 0) {
        episodeList.forEach(() => {
-         episodeCounter += 1;
+         episodeCounter = episodeList.length;
          episodeContainers[episodeIndex].style.display = "";
          episodeIndex++; // This increments});
        });
      } else {
        episodeList.forEach(() => {
          if (episodeCounter === event.target.options[event.target.selectedIndex].index - 1) {
-       showEpisode(episodeContainers[episodeIndex].style.display = "")
+       showEpisode(episodeContainers[episodeIndex])
          } else {
-        hideEpisode(episodeContainers[episodeIndex].style.display = "none");   
+        hideEpisode(episodeContainers[episodeIndex]);   
          }
          episodeIndex++; // This increments});
        });
-        episodeCounter += 1;
+        episodeCounter = 1;
     }
-    
+    updateCounter(episodeCounter, episodeList.length);
    });
-  
+  return select;
 };
 
 // counter function display
@@ -123,52 +122,19 @@ const addCounter = () => {
   counterDisplay = document.createElement("div");
   counterDisplay.setAttribute("id", "counterDisplayID");
   counterDisplay.style.marginTop = "0.5em"; // centre below
+ 
   return counterDisplay;
 };
 
 function updateCounter(numberOfEpisodes, totalEpisodes) {
+  // counter for number of episode found in search
   let counterDisplay = document.querySelector("#counterDisplayID");
+
   counterDisplay.innerText = `Displaying ${numberOfEpisodes} / ${totalEpisodes} episodes`; // update of the counter
 }
 
-
-
-
-
-// function counterDisplay(numberOfEpisodes) {
-//   // counter for number of episode found in search
-//   let counterDisplay = document.querySelector("#counterDisplayID");
-//   let navBarContainer = document.getElementById("navBarContainer");
-//   let event;
-//   let target;
-
-//   if (counterDisplay === null) {
-//     // if the counter doesn't exist it creates a counter then update
-//     counterDisplay = document.createElement("div");
-//     counterDisplay.setAttribute("id", "counterDisplayID");
-//     counterDisplay.style.backgroundColor = "blue";
-//     counterDisplay.style.marginTop = "0.5em"; // centre below
-//     //counterDisplay.style.margin = "0.1em";
-//     navBarContainer.appendChild(counterDisplay);
-//   }
-//   // find the source for num of episodes for GOT
-//   counterDisplay.innerText = `Displaying ${numberOfEpisodes}/ ${
-//     getAllEpisodes().length
-//   } episodes`; // update of the counter
-// }
-
-// input search bar
-function searchKeyWords() {
-  let navBarContainer = document.createElement("div");
-  let body = document.querySelector("body");
-
-  navBarContainer.style.display = "flex";
-  navBarContainer.setAttribute("id", "navBarContainer");
-  body.insertBefore(navBarContainer, rootElem);
-
-  let episodeList = getAllEpisodes();
-  dropDownMenu(episodeList); // appends the drop down menu before the other nav bar elements
-
+const addSearchBox = (episodeList) => {
+  let episodeContainers = document.getElementsByClassName("episode-container-class-name"); // An array of episode container
   let inputBox = document.createElement("input");
   inputBox.setAttribute("id", "inputBoxId");
   inputBox.setAttribute("placeHolder", "type and search for episode");
@@ -176,47 +142,57 @@ function searchKeyWords() {
   inputBox.style.backgroundColor = "#f5f5f5";
   inputBox.style.margin = "0.8em"; // spacing to the left of episode list
 
-  navBarContainer.appendChild(inputBox);
-  // rootElem.appendChild(navBarContainer);
-  counterDisplay(getAllEpisodes().length); // this calls the number of items in the array
-
   inputBox.addEventListener("keyup", (event) => {
     const searchString = event.target.value.toLowerCase(); // gets search string from input
-    let episodeContainers = document.getElementsByClassName(
-      "episodeContainerClassName"
-    ); // An array of episode container
-    let episodeIndex = 0; // this allows us to access each episode counter
-
-    let episodeCounter = 0; // this is the number of episodes that match the key word search string
+    let episodeIndex = 0;
+    let episodeCount = 0; // this is the number of episodes that match the key word search string
 
     episodeList.forEach((episode) => {
       if (
-        episode.name.toLowerCase().includes(searchString) ||
-        episode.summary.toLowerCase().includes(searchString)
-      ) {
-        episodeCounter += 1;
-        episodeContainers[episodeIndex].style.display = "";
+        episode.name.toLowerCase().includes(searchString) || episode.summary.toLowerCase().includes(searchString)) {
+        episodeCount++;
+        showEpisode(episodeContainers[episodeIndex]);
       } else {
-        episodeContainers[episodeIndex].style.display = "none";
+        hideEpisode(episodeContainers[episodeIndex]);
       }
-      episodeIndex++; // This increments
+      episodeIndex++;
     });
-    counterDisplay(episodeCounter);
-    console.log("episode counter", episodeCounter); // test for episode counter
+    updateCounter(episodeCount, episodeList.length);
   });
-}
 
-// displays the episodes onto the entire page
+  return inputBox;
+};
+
+
+
+
+
+const addHeader = (episodeList) => {
+  const rootElem = document.getElementById("root");
+  let navBarContainer = document.createElement("div");
+  let body = document.querySelector("body");
+
+  navBarContainer.style.display = "flex";
+  navBarContainer.setAttribute("id", "navBarContainer");
+  body.insertBefore(navBarContainer, rootElem);
+  const inputBox = addSearchBox(episodeList);
+  navBarContainer.appendChild(inputBox);
+  const counter = addCounter();
+  navBarContainer.appendChild(counter);
+  updateCounter(episodeList.length, episodeList.length);
+  const dropDown = addDropDownMenu(episodeList);
+  navBarContainer.appendChild(dropDown);
+};
+
 function makePageForEpisodes(episodeList) {
-  displayEpisodes(episodeList);
-  addHeader(episodeList);
-  addFooter();
+    addAllEpisodes(episodeList);
+    addHeader(episodeList);
+    addFooter();
 }
-
-  // window onload set up
-  function setup() {
+  
+function setup() {
     const allEpisodes = getAllEpisodes();
     makePageForEpisodes(allEpisodes);
-  }
-
+}
+  
 window.onload = setup;
