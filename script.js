@@ -1,17 +1,14 @@
 //You can edit ALL of the code here
-
-const addFooter = () => {
+const addFooter = (_) => {
   const rootElem = document.getElementById("root");
   let footer = document.createElement("footer");
   footer.innerHTML = "<p>https://tvmaze.com/</p>";
   rootElem.appendChild(footer);
 };
 
-
 const hideEpisode = (episode) => {
   episode.style.display = "none";
 };
-
 
 const showEpisode = (episode) => {
   episode.style.display = "";
@@ -27,10 +24,10 @@ function formatSeasonNum(num) {
 }
 
 // displays a single episode
-function addsingleEpisode(element) {
+function addSingleEpisode(episode) {
   let episodeContainer = document.createElement("div");
   episodeContainer.style.display = "block"; // dis
-  episodeContainer.className = "episodeContainerClassName";
+  episodeContainer.className = "episode-container-class-name";
   episodeContainer.style.backgroundColor = "#f5f5dc";
   episodeContainer.style.padding = "1.5em";
   episodeContainer.style.width = "20rem";
@@ -38,29 +35,30 @@ function addsingleEpisode(element) {
 
   let title = document.createElement("h2");
   title.style.textAlign = "center";
-  title.innerHTML = `${element.name}: S${formatSeasonNum(
-    element.season
-  )}E${formatSeasonNum(element.number)}`;
+  title.innerHTML = `${episode.name}: S${formatSeasonNum(
+    episode.season
+  )}E${formatSeasonNum(episode.number)}`;
   title.className = "title";
 
   let img = document.createElement("img");
   img.style.margin = "0 auto";
   img.style.width = "99%";
-  img.src = element.image.medium;
+  // img.style.paddingLeft = "2em";
+  // img.style.paddingRight = "2em";
+  img.src = episode.image.medium;
 
   let summary = document.createElement("p");
   summary.style.texAlign = "center";
-  summary.innerHTML = `${element.summary}`;
+  summary.innerHTML = `${episode.summary}`;
   summary.className = "summary";
   episodeContainer.appendChild(title);
   episodeContainer.appendChild(img);
   episodeContainer.appendChild(summary);
-  rootElem.appendChild(episodeContainer);
+  //rootElem.appendChild(episodeContainer);
   return episodeContainer;
 }
 
-// display multiple episodes + loops the data
-function addAllEpisodes(elements) {
+const addAllEpisodes = (episodeList) => {
   const rootElem = document.getElementById("root");
   let styleContainer = document.createElement("div");
   styleContainer.className = "style-container";
@@ -68,12 +66,11 @@ function addAllEpisodes(elements) {
   styleContainer.style.flexWrap = "wrap";
   styleContainer.style.margin = "0 auto";
 
-  elements.forEach((element) => {
-    styleContainer.appendChild(addSingleEpisode(element));
+  episodeList.forEach((episode) => {
+    styleContainer.appendChild(addSingleEpisode(episode));
   });
   rootElem.appendChild(styleContainer);
-}
-
+};
 
 const addDropDownMenu = (episodeList) => {
   let select = document.createElement("select");
@@ -92,37 +89,44 @@ const addDropDownMenu = (episodeList) => {
   });
 
   select.addEventListener("change", function (event) {
-     let episodeContainers = document.getElementsByClassName("episode-container-class-name"); // An array of episode container
-     let episodeIndex = 0;
-     let episodeCounter = 0;
+    let episodeContainers = document.getElementsByClassName(
+      "episode-container-class-name"
+    ); // An array of episode container
+    //let navBarContainer = document.getElementById("navBarContainer");
+    let episodeIndex = 0;
+    let episodeCounter = 0;
     if (event.target.options[event.target.selectedIndex].index === 0) {
-       episodeList.forEach(() => {
-         episodeCounter = episodeList.length;
-         episodeContainers[episodeIndex].style.display = "";
-         episodeIndex++; // This increments});
-       });
-     } else {
-       episodeList.forEach(() => {
-         if (episodeCounter === event.target.options[event.target.selectedIndex].index - 1) {
-       showEpisode(episodeContainers[episodeIndex])
-         } else {
-        hideEpisode(episodeContainers[episodeIndex]);   
-         }
-         episodeIndex++; // This increments});
-       });
-        episodeCounter = 1;
+      episodeList.forEach(() => {
+        episodeCounter = episodeList.length;
+        episodeContainers[episodeIndex].style.display = "";
+        episodeIndex++; // This increments});
+      });
+    } else {
+      episodeList.forEach(() => {
+        if (
+          episodeIndex ===
+          event.target.options[event.target.selectedIndex].index - 1
+        ) {
+          showEpisode(episodeContainers[episodeIndex]); //.style.display = "";
+        } else {
+          hideEpisode(episodeContainers[episodeIndex]); //.style.display = "none";
+        }
+        episodeIndex++; // This increments});
+      });
+      episodeCounter = 1;
     }
     updateCounter(episodeCounter, episodeList.length);
-   });
+  });
   return select;
 };
 
 // counter function display
-const addCounter = () => {
+const addCounter = (_) => {
   counterDisplay = document.createElement("div");
   counterDisplay.setAttribute("id", "counterDisplayID");
+  //counterDisplay.style.backgroundColor = "blue";
   counterDisplay.style.marginTop = "0.5em"; // centre below
- 
+
   return counterDisplay;
 };
 
@@ -134,7 +138,9 @@ function updateCounter(numberOfEpisodes, totalEpisodes) {
 }
 
 const addSearchBox = (episodeList) => {
-  let episodeContainers = document.getElementsByClassName("episode-container-class-name"); // An array of episode container
+  let episodeContainers = document.getElementsByClassName(
+    "episode-container-class-name"
+  ); // An array of episode container
   let inputBox = document.createElement("input");
   inputBox.setAttribute("id", "inputBoxId");
   inputBox.setAttribute("placeHolder", "type and search for episode");
@@ -149,7 +155,9 @@ const addSearchBox = (episodeList) => {
 
     episodeList.forEach((episode) => {
       if (
-        episode.name.toLowerCase().includes(searchString) || episode.summary.toLowerCase().includes(searchString)) {
+        episode.name.toLowerCase().includes(searchString) ||
+        episode.summary.toLowerCase().includes(searchString)
+      ) {
         episodeCount++;
         showEpisode(episodeContainers[episodeIndex]);
       } else {
@@ -162,10 +170,6 @@ const addSearchBox = (episodeList) => {
 
   return inputBox;
 };
-
-
-
-
 
 const addHeader = (episodeList) => {
   const rootElem = document.getElementById("root");
@@ -185,14 +189,16 @@ const addHeader = (episodeList) => {
 };
 
 function makePageForEpisodes(episodeList) {
-    addAllEpisodes(episodeList);
-    addHeader(episodeList);
-    addFooter();
+  //rootElem.textContent = `Got ${episodeList.length} episode(s)`;
+  addAllEpisodes(episodeList);
+  addHeader(episodeList);
+  addFooter();
 }
-  
+
 function setup() {
-    const allEpisodes = getAllEpisodes();
-    makePageForEpisodes(allEpisodes);
+  const allEpisodes = getAllEpisodes();
+  makePageForEpisodes(allEpisodes);
 }
-  
+// global variables
+//const rootElem = document.getElementById("root");
 window.onload = setup;
