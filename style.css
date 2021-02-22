@@ -1,8 +1,18 @@
 #root {
-  color: black;
+  color: red;
 }
 
+.style-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
 
-.style-container{
-display: flex;
+.episode-container-class-name{
+  width: 100%;
+  background-color: #CAE9FF;
+  border-radius: 25px 25px 15px 15px;
+  width: 28%;
+  margin-top: 2em;
+  margin-bottom: 1em;
 }
