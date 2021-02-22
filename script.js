@@ -119,27 +119,43 @@ const addDropDownMenu = (episodeList) => {
 };
 
 // counter function display
-function counterDisplay(numberOfEpisodes) {
-  // counter for number of episode found in search
-  let counterDisplay = document.querySelector("#counterDisplayID");
-  let navBarContainer = document.getElementById("navBarContainer");
-  let event;
-  let target;
+const addCounter = () => {
+  counterDisplay = document.createElement("div");
+  counterDisplay.setAttribute("id", "counterDisplayID");
+  counterDisplay.style.marginTop = "0.5em"; // centre below
+  return counterDisplay;
+};
 
-  if (counterDisplay === null) {
-    // if the counter doesn't exist it creates a counter then update
-    counterDisplay = document.createElement("div");
-    counterDisplay.setAttribute("id", "counterDisplayID");
-    counterDisplay.style.backgroundColor = "blue";
-    counterDisplay.style.marginTop = "0.5em"; // centre below
-    //counterDisplay.style.margin = "0.1em";
-    navBarContainer.appendChild(counterDisplay);
-  }
-  // find the source for num of episodes for GOT
-  counterDisplay.innerText = `Displaying ${numberOfEpisodes}/ ${
-    getAllEpisodes().length
-  } episodes`; // update of the counter
+function updateCounter(numberOfEpisodes, totalEpisodes) {
+  let counterDisplay = document.querySelector("#counterDisplayID");
+  counterDisplay.innerText = `Displaying ${numberOfEpisodes} / ${totalEpisodes} episodes`; // update of the counter
 }
+
+
+
+
+
+// function counterDisplay(numberOfEpisodes) {
+//   // counter for number of episode found in search
+//   let counterDisplay = document.querySelector("#counterDisplayID");
+//   let navBarContainer = document.getElementById("navBarContainer");
+//   let event;
+//   let target;
+
+//   if (counterDisplay === null) {
+//     // if the counter doesn't exist it creates a counter then update
+//     counterDisplay = document.createElement("div");
+//     counterDisplay.setAttribute("id", "counterDisplayID");
+//     counterDisplay.style.backgroundColor = "blue";
+//     counterDisplay.style.marginTop = "0.5em"; // centre below
+//     //counterDisplay.style.margin = "0.1em";
+//     navBarContainer.appendChild(counterDisplay);
+//   }
+//   // find the source for num of episodes for GOT
+//   counterDisplay.innerText = `Displaying ${numberOfEpisodes}/ ${
+//     getAllEpisodes().length
+//   } episodes`; // update of the counter
+// }
 
 // input search bar
 function searchKeyWords() {
