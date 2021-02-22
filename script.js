@@ -10,11 +10,7 @@ const addFooter = () => {
 
 const rootElem = document.getElementById("root");
 
-// window onload set up
-function setup() {
-  const allEpisodes = getAllEpisodes();
-  makePageForEpisodes(allEpisodes);
-}
+
 
 // formats the number for the season data
 function formatSeasonNum(num) {
@@ -246,34 +242,11 @@ add a condition when there is "" then all episodes are displayed
   // });
 }
 // searchKeyWords();
+
+// window onload set up
+function setup() {
+  const allEpisodes = getAllEpisodes();
+  makePageForEpisodes(allEpisodes);
+}
+
 window.onload = setup;
-
-/* 
-pre task - t
-create function - create elements for search bar / access div's from html
-create a loop with a condition 
-modify the dom each time you are checking 
-*/
-
-/* Task 2- level 200
-Add Search#
-Add a "live" search input:
-Only episodes whose summary OR name contains the search term should be displayed
-The search should be case-insensitive
-The display should update immediately after each keystroke changes the input.
-Display how many episodes match the current search
-If the search box is cleared, all episodes should be shown.
-If you have been fetching the episode data from the API, be careful not 
-to cause many frequent requests with this search feature. 
-The search should look through an in-memory copy of the episode list. 
-Do not fetch the data again each time something is typed!
-*/
-
-/*
-pre task - create one card 
-Java Script gather the elements for the the episode 
-- name of episode, season (number), episode (number), image(medium), summary(p)
-- create background 
-html 
-- create divs for each element.
-*/
