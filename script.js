@@ -208,23 +208,15 @@ function searchKeyWords() {
 
 // displays the episodes onto the entire page
 function makePageForEpisodes(episodeList) {
-  // attributes for counter
-
   displayEpisodes(episodeList);
-  searchKeyWords();
+  addHeader(episodeList);
+  addFooter();
+}
 
-  function footer() {
-    let footer = document.createElement("footer");
-    footer.innerHTML = "<p>https://tvmaze.com/</p>";
-    rootElem.appendChild(footer);
+  // window onload set up
+  function setup() {
+    const allEpisodes = getAllEpisodes();
+    makePageForEpisodes(allEpisodes);
   }
-  footer();
-}
-
-// window onload set up
-function setup() {
-  const allEpisodes = getAllEpisodes();
-  makePageForEpisodes(allEpisodes);
-}
 
 window.onload = setup;
