@@ -7,11 +7,12 @@ const addFooter = () => {
   rootElem.appendChild(footer);
 };
 
+// hides episode from the display
 const hideEpisode = episode => {
   episode.style.display = "none";
 };
 
-
+// shows episode on the display
 const showEpisode = episode => {
   episode.style.display = "";
 };
@@ -59,7 +60,8 @@ function singleEpisode(element) {
 }
 
 // display multiple episodes + loops the data
-function displayEpisodes(elements) {
+function addAllEpisodes(elements) {
+  const rootElem = document.getElementById("root");
   let styleContainer = document.createElement("div");
   styleContainer.className = "style-container";
   styleContainer.style.width = "98%";
