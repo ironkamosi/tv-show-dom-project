@@ -1,5 +1,13 @@
 //You can edit ALL of the code here
-// global variables
+
+const addFooter = () => {
+  const rootElem = document.getElementById("root");
+  let footer = document.createElement("footer")
+  footer.innerHTML = "<p>https://tvmaze.com/</p>";
+  rootElem.appendChild(footer);
+}
+
+
 const rootElem = document.getElementById("root");
 
 // window onload set up
