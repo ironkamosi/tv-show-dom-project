@@ -135,10 +135,7 @@ function counterDisplay(numberOfEpisodes) {
   let navBarContainer = document.getElementById("navBarContainer");
   let event;
   let target;
-  // if (removeCounter) {
-  //   removeCounter.remove()
-  // }
-  // console.log("counterDisplay", counterDisplay);
+ 
   if (counterDisplay === null) {
     // if the counter doesn't exist it creates a counter then update
     counterDisplay = document.createElement("div");
