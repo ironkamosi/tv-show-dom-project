@@ -1,27 +1,18 @@
 //You can edit ALL of the code here
 
-// tv input selector 
-
+// tv input selector
 function tvShowDropDown (episodeList){
   let select = document.createElement("select");
-  select.setAttribute("id", "select");
-
-  let option = document.createElement("option");
-  option.innerText = "All episodes";
-  select.appendChild(option);
+  select.setAttribute("id", "select-tv");
 
   episodeList.forEach((episode) => {
     let option = document.createElement("option");
-    option.innerHTML = `${episode.name}: S${formatSeasonNum(
-      episode.season
-    )}E${formatSeasonNum(episode.number)}`;
+    option.innerHTML = `${episode.name}: S${formatSeasonNum(episode.season)}E${formatSeasonNum(episode.number)}`;
     select.appendChild(option);
   });
 
   select.addEventListener("change", function (event) {
-    let episodeContainers = document.getElementsByClassName(
-      "episode-container-class-name"
-    ); // An array of episode container
+    let episodeContainers = document.getElementsByClassName("episode-container-class-name"); // An array of episode container
     //let navBarContainer = document.getElementById("navBarContainer");
     let episodeIndex = 0;
     let episodeCounter = 0;
