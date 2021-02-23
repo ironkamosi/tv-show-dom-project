@@ -3,17 +3,16 @@
 // tv input selector
 function tvShowDropDown() {
   const rootElem = document.getElementById("root");
-  const tvShowData = getAllShows(); // 
+  const tvShowData = getAllShows(); 
   let select = document.createElement("select");
   select.setAttribute("id", "select-tv");
   rootElem.appendChild(select)
   tvShowData.forEach((show) => {
     let option = document.createElement("option");
-    option.innerHTML = `${show.name}`;
+    option.innerHTML = `${show.name}`; // loops over the tv show data 
     select.appendChild(option);
   });
   
- 
   // select.addEventListener("change", function (event) {
   //   let episodeContainers = document.getElementsByClassName("episode-container-class-name"); // An array of episode container
   //   //let navBarContainer = document.getElementById("navBarContainer");
@@ -42,10 +41,10 @@ function tvShowDropDown() {
   //   }
   //   updateCounter(episodeCounter, episodeList.length);
   // });
-  // return select;
+  return select;
 };
 
- tvShowDropDown();
+
 
 
 function addFooter () {
@@ -224,10 +223,13 @@ const addHeader = (episodeList) => {
   const rootElem = document.getElementById("root");
   let navBarContainer = document.createElement("div");
   let body = document.querySelector("body");
-
+  
   navBarContainer.style.display = "flex";
   navBarContainer.setAttribute("id", "navBarContainer");
   body.insertBefore(navBarContainer, rootElem);
+  const showSelector = tvShowDropDown();
+  navBarContainer.appendChild(showSelector);
+
   const inputBox = addSearchBox(episodeList);
   navBarContainer.appendChild(inputBox);
   const counter = addCounter();
