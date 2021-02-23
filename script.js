@@ -1,49 +1,51 @@
 //You can edit ALL of the code here
 
 // tv input selector
-function tvShowDropDown (episodeList){
+function tvShowDropDown() {
+  const rootElem = document.getElementById("root");
+  const tvShowData = getAllShows(); // 
   let select = document.createElement("select");
   select.setAttribute("id", "select-tv");
-
-  episodeList.forEach((episode) => {
+  rootElem.appendChild(select)
+  tvShowData.forEach((show) => {
     let option = document.createElement("option");
-    option.innerHTML = `${episode.name}: S${formatSeasonNum(episode.season)}E${formatSeasonNum(episode.number)}`;
+    option.innerHTML = `${show.name}`;
     select.appendChild(option);
   });
-
-  select.addEventListener("change", function (event) {
-    let episodeContainers = document.getElementsByClassName("episode-container-class-name"); // An array of episode container
-    //let navBarContainer = document.getElementById("navBarContainer");
-    let episodeIndex = 0;
-    let episodeCounter = 0;
-    if (event.target.options[event.target.selectedIndex].index === 0) {
-      // refers to the all episode option
-      episodeList.forEach(() => {
-        episodeCounter = episodeList.length;
-        episodeContainers[episodeIndex].style.display = "";
-        episodeIndex++; // This increments});
-      });
-    } else {
-      episodeList.forEach(() => {
-        if (
-          episodeIndex ===
-          event.target.options[event.target.selectedIndex].index - 1 // test if the current index is equal to the index
-        ) {
-          showEpisode(episodeContainers[episodeIndex]); //.style.display = "";
-        } else {
-          hideEpisode(episodeContainers[episodeIndex]); //.style.display = "none";
-        }
-        episodeIndex++; // This increments});
-      });
-      episodeCounter = 1;
-    }
-    updateCounter(episodeCounter, episodeList.length);
-  });
-  return select;
+  
+ 
+  // select.addEventListener("change", function (event) {
+  //   let episodeContainers = document.getElementsByClassName("episode-container-class-name"); // An array of episode container
+  //   //let navBarContainer = document.getElementById("navBarContainer");
+  //   let episodeIndex = 0;
+  //   let episodeCounter = 0;
+  //   if (event.target.options[event.target.selectedIndex].index === 0) {
+  //     // refers to the all episode option
+  //     episodeList.forEach(() => {
+  //       episodeCounter = episodeList.length;
+  //       episodeContainers[episodeIndex].style.display = "";
+  //       episodeIndex++; // This increments});
+  //     });
+  //   } else {
+  //     episodeList.forEach(() => {
+  //       if (
+  //         episodeIndex ===
+  //         event.target.options[event.target.selectedIndex].index - 1 // test if the current index is equal to the index
+  //       ) {
+  //         showEpisode(episodeContainers[episodeIndex]); //.style.display = "";
+  //       } else {
+  //         hideEpisode(episodeContainers[episodeIndex]); //.style.display = "none";
+  //       }
+  //       episodeIndex++; // This increments});
+  //     });
+  //     episodeCounter = 1;
+  //   }
+  //   updateCounter(episodeCounter, episodeList.length);
+  // });
+  // return select;
 };
 
-
-
+ tvShowDropDown();
 
 
 function addFooter () {
