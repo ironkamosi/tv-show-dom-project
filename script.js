@@ -1,13 +1,12 @@
 //You can edit ALL of the code here
 
 // tv input selector
-function addShowSelector() {
+function addShowSelector(showData) { // 
   const rootElem = document.getElementById("root");
-  const tvShowData = getAllShows(); 
   let select = document.createElement("select");
   select.setAttribute("id", "select-tv");
   rootElem.appendChild(select)
-  tvShowData.forEach((show) => {
+  showData.forEach((show) => {
     let option = document.createElement("option");
     option.innerHTML = `${show.name}`; // loops over the tv show data 
     select.appendChild(option);
@@ -219,7 +218,7 @@ const addSearchBox = (episodeList) => {
   return inputBox;
 };
 
-const addHeader = (episodeList) => {
+const addHeader = (episodeList, showData) => {
   const rootElem = document.getElementById("root");
   let navBarContainer = document.createElement("div");
   let body = document.querySelector("body");
@@ -228,7 +227,7 @@ const addHeader = (episodeList) => {
   navBarContainer.setAttribute("id", "navBarContainer");
   body.insertBefore(navBarContainer, rootElem);
   
-  const showSelector = addShowSelector();
+  const showSelector = addShowSelector(showData);
   navBarContainer.appendChild(showSelector);
 
   const inputBox = addSearchBox(episodeList);
