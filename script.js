@@ -1,5 +1,11 @@
 //You can edit ALL of the code here
 
+// removes data from the dom
+function removeEpisodes(episodeList) { 
+let episodeContainers = document.getElementsByClassName("episode-container-class-name");
+episodeContainers.parentNode.removeChild(episodeList)
+}
+
 // tv input selector
 function addShowSelector(showData) { // 
   const rootElem = document.getElementById("root");
@@ -12,34 +18,34 @@ function addShowSelector(showData) { //
     select.appendChild(option);
   });
   
-  // select.addEventListener("change", function (event) {
-  //   let episodeContainers = document.getElementsByClassName("episode-container-class-name"); // An array of episode container
-  //   //let navBarContainer = document.getElementById("navBarContainer");
-  //   let episodeIndex = 0;
-  //   let episodeCounter = 0;
-  //   if (event.target.options[event.target.selectedIndex].index === 0) {
-  //     // refers to the all episode option
-  //     episodeList.forEach(() => {
-  //       episodeCounter = episodeList.length;
-  //       episodeContainers[episodeIndex].style.display = "";
-  //       episodeIndex++; // This increments});
-  //     });
-  //   } else {
-  //     episodeList.forEach(() => {
-  //       if (
-  //         episodeIndex ===
-  //         event.target.options[event.target.selectedIndex].index - 1 // test if the current index is equal to the index
-  //       ) {
-  //         showEpisode(episodeContainers[episodeIndex]); //.style.display = "";
-  //       } else {
-  //         hideEpisode(episodeContainers[episodeIndex]); //.style.display = "none";
-  //       }
-  //       episodeIndex++; // This increments});
-  //     });
-  //     episodeCounter = 1;
-  //   }
-  //   updateCounter(episodeCounter, episodeList.length);
-  // });
+  select.addEventListener("change", function (event) {
+    let episodeContainers = document.getElementsByClassName("episode-container-class-name"); // An array of episode container
+    let episodeIndex = 0;
+    let episodeCounter = 0;
+
+    if (event.target.options[event.target.selectedIndex].index === 0) { 
+      // refers to the all episode option
+      episodeList.forEach(() => {
+        episodeCounter = episodeList.length;
+        episodeContainers[episodeIndex].style.display = "";
+        episodeIndex++; // This increments});
+      });
+    } else {
+      episodeList.forEach(() => {
+        if (
+          episodeIndex ===
+          event.target.options[event.target.selectedIndex].index - 1 // test if the current index is equal to the index
+        ) {
+          showEpisode(episodeContainers[episodeIndex]); //.style.display = "";
+        } else {
+          hideEpisode(episodeContainers[episodeIndex]); //.style.display = "none";
+        }
+        episodeIndex++; // This increments});
+      });
+      episodeCounter = 1;
+    }
+    updateCounter(episodeCounter, episodeList.length);
+  });
   return select;
 };
 
@@ -253,4 +259,11 @@ fetch("https://api.tvmaze.com/shows/82/episodes")
   .catch((error) => console.log(error));
 }
 
+function getAllEpisodesApi(id) { // function to get the apis 
+  let arrayOfEpisodes;
+  fetch(`https://api.tvmaze.com/shows/${id}/episodes`)
+  .then((response) => response.json().then((data) => data))
+  .then((allEpisodes) => arrayOfEpisodes = allEpisodes) // gets the episode data and sets it to an array of episodes
+  .catch((error) => console.log(error));
+}
 window.onload = setup;
