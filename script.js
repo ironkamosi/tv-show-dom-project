@@ -1,7 +1,7 @@
 //You can edit ALL of the code here
 
 // tv input selector
-function tvShowDropDown() {
+function addShowSelector() {
   const rootElem = document.getElementById("root");
   const tvShowData = getAllShows(); 
   let select = document.createElement("select");
@@ -227,7 +227,8 @@ const addHeader = (episodeList) => {
   navBarContainer.style.display = "flex";
   navBarContainer.setAttribute("id", "navBarContainer");
   body.insertBefore(navBarContainer, rootElem);
-  const showSelector = tvShowDropDown();
+  
+  const showSelector = addShowSelector();
   navBarContainer.appendChild(showSelector);
 
   const inputBox = addSearchBox(episodeList);
@@ -240,13 +241,13 @@ const addHeader = (episodeList) => {
 };
 
 function makePageForEpisodes(episodeList) {
-  //rootElem.textContent = `Got ${episodeList.length} episode(s)`;
+  const tvShowData = getAllShows(); 
   addAllEpisodes(episodeList);
-  addHeader(episodeList);
+  addHeader(episodeList,tvShowData);
   addFooter();
 }
 
-function setup() {
+function setup() { // fetches the data from the tv show website
 fetch("https://api.tvmaze.com/shows/82/episodes")
   .then((response) => response.json().then((data) => data))
   .then((allEpisodes) => makePageForEpisodes(allEpisodes))
