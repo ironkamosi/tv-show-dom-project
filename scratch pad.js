@@ -123,27 +123,3 @@ function searchKeyWords() {
 searchKeyWords();
 window.onload = setup;
 
-
-
-/* Task 2- level 200
-Add Search#
-Add a "live" search input:
-Only episodes whose summary OR name contains the search term should be displayed
-The search should be case-insensitive
-The display should update immediately after each keystroke changes the input.
-Display how many episodes match the current search
-If the search box is cleared, all episodes should be shown.
-If you have been fetching the episode data from the API, be careful not 
-to cause many frequent requests with this search feature. 
-The search should look through an in-memory copy of the episode list. 
-Do not fetch the data again each time something is typed!
-*/
-
-/*
-pre task - create one card 
-Java Script gather the elements for the the episode 
-- name of episode, season (number), episode (number), image(medium), summary(p)
-- create background 
-html 
-- create divs for each element.
-*/
