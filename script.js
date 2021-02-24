@@ -1,63 +1,91 @@
 //You can edit ALL of the code here
 
 // removes data from the dom
-function removeEpisodes(episodeList) { 
-let episodeContainers = document.getElementsByClassName("episode-container-class-name");
-episodeContainers.parentNode.removeChild(episodeList)
-}
-
-// tv input selector
-function addShowSelector(showData) { // 
-  const rootElem = document.getElementById("root");
-  let select = document.createElement("select");
-  select.setAttribute("id", "select-tv");
-  rootElem.appendChild(select)
-  showData.forEach((show) => {
-    let option = document.createElement("option");
-    option.innerHTML = `${show.name}`; // loops over the tv show data 
-    select.appendChild(option);
+function removeEpisodes(episodeList) {
+  let episodeContainers = document.getElementsByClassName(
+    "episode-container-class-name"
+  );
+  episodeContainers.innerHTML = "";
+  episodeList.forEach((element) => {
+    // loops over the array and removes each episode from the dom when the eventListener is activated
+    episodeContainers.parentNode.removeChild(element);
   });
-  
+}
+// when logic is done call in the eventListener
+// tv input selector
+function addShowSelector(showData) {
+  const rootElem = document.getElementById("root");
+
+  let select = document.getElementById("select-tv"); // this only adds the show select if it is not present in the DOM
+  console.log("test", select);
+
+  if (select === null) {
+    // this only works if the element does not exist
+    select = document.createElement("select");
+    select.setAttribute("id", "select-tv");
+    rootElem.appendChild(select);
+
+    showData.forEach((show) => {
+      let option = document.createElement("option");
+      option.innerHTML = `${show.name}`; // loops over the tv show data
+      select.appendChild(option);
+    });
+  }
+
   select.addEventListener("change", function (event) {
-    let episodeContainers = document.getElementsByClassName("episode-container-class-name"); // An array of episode container
+    let episodeContainers = document.getElementsByClassName(
+      "episode-container-class-name"
+    ); // An array of episode container
     let episodeIndex = 0;
     let episodeCounter = 0;
+    let optionId = event.target.options[event.target.selectedIndex].index;
+    let showId = showData[optionId].id;
+    // for every item duplicate we need an test to see if it exists
 
-    if (event.target.options[event.target.selectedIndex].index === 0) { 
-      // refers to the all episode option
-      episodeList.forEach(() => {
-        episodeCounter = episodeList.length;
-        episodeContainers[episodeIndex].style.display = "";
-        episodeIndex++; // This increments});
-      });
-    } else {
-      episodeList.forEach(() => {
-        if (
-          episodeIndex ===
-          event.target.options[event.target.selectedIndex].index - 1 // test if the current index is equal to the index
-        ) {
-          showEpisode(episodeContainers[episodeIndex]); //.style.display = "";
-        } else {
-          hideEpisode(episodeContainers[episodeIndex]); //.style.display = "none";
-        }
-        episodeIndex++; // This increments});
-      });
-      episodeCounter = 1;
-    }
-    updateCounter(episodeCounter, episodeList.length);
+    getAllEpisodesApi(showId); // this call gets the all the episodes
+
+   // console.log("test", showData[optionId]);
+    let styleContainer = document.getElementById("styleContainer");
+    styleContainer.innerHTML = "";
+
+    // fetch(`https://api.tvmaze.com/shows/${id}/episodes`)
+    //   .then((response) => response.json().then((data) => data))
+    //   .then((allEpisodes) => (arrayOfEpisodes = allEpisodes)) // gets the episode data and sets it to an array of episodes
+    //   .catch((error) => console.log(error));
+
+    // if (event.target.options[event.target.selectedIndex].index === 0) {
+    //   // refers to the all episode option
+    //   episodeList.forEach(() => {
+    //     episodeCounter = episodeList.length;
+    //     episodeContainers[episodeIndex].style.display = "";
+    //     episodeIndex++; // This increments});
+    //   });
+    // } else {
+    //   episodeList.forEach(() => {
+    //     if (
+    //       episodeIndex ===
+    //       event.target.options[event.target.selectedIndex].index - 1 // test if the current index is equal to the index
+    //     ) {
+    //       showEpisode(episodeContainers[episodeIndex]); //.style.display = "";
+    //     } else {
+    //       hideEpisode(episodeContainers[episodeIndex]); //.style.display = "none";
+    //     }
+    //     episodeIndex++; // This increments});
+    //   });
+    //   episodeCounter = 1;
+    // }
+    // updateCounter(episodeCounter, episodeList.length);
   });
+
   return select;
-};
+}
 
-
-
-
-function addFooter () {
+function addFooter() {
   const rootElem = document.getElementById("root");
   let footer = document.createElement("footer");
   footer.innerHTML = "<p>https://tvmaze.com/</p>";
   rootElem.appendChild(footer);
-};
+}
 
 const hideEpisode = (episode) => {
   episode.style.display = "none";
@@ -111,9 +139,11 @@ function addSingleEpisode(episode) {
   return episodeContainer;
 }
 
+// container for the single episodes
 const addAllEpisodes = (episodeList) => {
   const rootElem = document.getElementById("root");
   let styleContainer = document.createElement("div");
+  styleContainer.setAttribute("id", "styleContainer");
   styleContainer.className = "style-container";
   styleContainer.style.width = "98%";
   styleContainer.style.flexWrap = "wrap";
@@ -126,12 +156,25 @@ const addAllEpisodes = (episodeList) => {
 };
 
 const addDropDownMenu = (episodeList) => {
-  let select = document.createElement("select");
-  select.setAttribute("id", "select");
+  let option;
+  let select = document.getElementById("select");
 
-  let option = document.createElement("option");
-  option.innerText = "All episodes";
-  select.appendChild(option);
+  if (select === null) {
+    select = document.createElement("select");
+    select.setAttribute("id", "select");
+    option = document.createElement("option");
+    option.innerText = "All episodes";
+    select.appendChild(option);
+  } else {
+    // let options = select.getElementsByTagName("option");
+    // console.log("test", options);
+    
+    for (let index = select.options.length; index > 0; index--) { // this will go through the loop starting at the end and for each element it will remove all the options before it rebuilds it 
+    select.remove(index);
+    }
+
+    // select.innerHTML = "";
+  }
 
   episodeList.forEach((episode) => {
     let option = document.createElement("option");
@@ -148,7 +191,8 @@ const addDropDownMenu = (episodeList) => {
     //let navBarContainer = document.getElementById("navBarContainer");
     let episodeIndex = 0;
     let episodeCounter = 0;
-    if (event.target.options[event.target.selectedIndex].index === 0) { // refers to the all episode option
+    if (event.target.options[event.target.selectedIndex].index === 0) {
+      // refers to the all episode option
       episodeList.forEach(() => {
         episodeCounter = episodeList.length;
         episodeContainers[episodeIndex].style.display = "";
@@ -158,7 +202,7 @@ const addDropDownMenu = (episodeList) => {
       episodeList.forEach(() => {
         if (
           episodeIndex ===
-          event.target.options[event.target.selectedIndex].index - 1 // test if the current index is equal to the index 
+          event.target.options[event.target.selectedIndex].index - 1 // test if the current index is equal to the index
         ) {
           showEpisode(episodeContainers[episodeIndex]); //.style.display = "";
         } else {
@@ -194,12 +238,17 @@ const addSearchBox = (episodeList) => {
   let episodeContainers = document.getElementsByClassName(
     "episode-container-class-name"
   ); // An array of episode container
-  let inputBox = document.createElement("input");
-  inputBox.setAttribute("id", "inputBoxId");
-  inputBox.setAttribute("placeHolder", "type and search for episode");
-  inputBox.style.width = "25em";
-  inputBox.style.backgroundColor = "#f5f5f5";
-  inputBox.style.margin = "0.8em"; // spacing to the left of episode list
+
+  let inputBox = document.getElementById("inputBoxId");
+  if (inputBox === null) {
+    // this only works if the ""inputBox does not exist
+    inputBox = document.createElement("input");
+    inputBox.setAttribute("id", "inputBoxId");
+    inputBox.setAttribute("placeHolder", "type and search for episode");
+    inputBox.style.width = "25em";
+    inputBox.style.backgroundColor = "#f5f5f5";
+    inputBox.style.margin = "0.8em"; // spacing to the left of episode list
+  }
 
   inputBox.addEventListener("keyup", (event) => {
     const searchString = event.target.value.toLowerCase(); // gets search string from input
@@ -228,11 +277,11 @@ const addHeader = (episodeList, showData) => {
   const rootElem = document.getElementById("root");
   let navBarContainer = document.createElement("div");
   let body = document.querySelector("body");
-  
+
   navBarContainer.style.display = "flex";
   navBarContainer.setAttribute("id", "navBarContainer");
   body.insertBefore(navBarContainer, rootElem);
-  
+
   const showSelector = addShowSelector(showData);
   navBarContainer.appendChild(showSelector);
 
@@ -246,24 +295,23 @@ const addHeader = (episodeList, showData) => {
 };
 
 function makePageForEpisodes(episodeList) {
-  const tvShowData = getAllShows(); 
+  const tvShowData = getAllShows();
   addAllEpisodes(episodeList);
-  addHeader(episodeList,tvShowData);
+  addHeader(episodeList, tvShowData);
   addFooter();
 }
 
-function setup() { // fetches the data from the tv show website
-fetch("https://api.tvmaze.com/shows/82/episodes")
-  .then((response) => response.json().then((data) => data))
-  .then((allEpisodes) => makePageForEpisodes(allEpisodes))
-  .catch((error) => console.log(error));
+function setup() {
+  // fetches the data from the tv show website
+  getAllEpisodesApi(82);
 }
 
-function getAllEpisodesApi(id) { // function to get the apis 
+function getAllEpisodesApi(id) {
+  // function to get the apis
   let arrayOfEpisodes;
   fetch(`https://api.tvmaze.com/shows/${id}/episodes`)
-  .then((response) => response.json().then((data) => data))
-  .then((allEpisodes) => arrayOfEpisodes = allEpisodes) // gets the episode data and sets it to an array of episodes
-  .catch((error) => console.log(error));
+    .then((response) => response.json().then((data) => data))
+    .then((allEpisodes) => makePageForEpisodes(allEpisodes))
+    .catch((error) => console.log(error));
 }
-window.onload = setup;
+window.onload = setup; // when the browser is load call set up
