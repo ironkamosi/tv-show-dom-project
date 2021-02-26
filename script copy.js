@@ -9,6 +9,19 @@ function removeEpisodes(episodeList) {
     episodeContainers.parentNode.removeChild(element);
   });
 }
+
+function compare(showOne ,showTwo) { // its comparing the content of the elements, it tries to understand the position of the string elements
+  console.log(showOne);
+
+  if (showOne.name.toLowerCase() < showTwo.name.toLowerCase()) {
+    return -1;
+  }
+   if (showOne.name.toLowerCase() < showTwo.name.toLowerCase()) {
+    return 1;
+  }
+  return 0;
+
+}
 // when logic is done call in the eventListener
 // tv input selector
 function addShowSelector(showData) {
@@ -23,13 +36,22 @@ function addShowSelector(showData) {
     select.setAttribute("id", "select-tv");
     rootElem.appendChild(select);
 
-    showData.forEach((show) => {
+    showData.sort(compare).forEach((show) => { //  when the function processes the forEach the array will be sorted 
       let option = document.createElement("option");
       option.innerHTML = `${show.name}`; // loops over the tv show data
       select.appendChild(option);
     });
   }
-//  
+
+  /* 
+   showData.map(show => show.name).sort().forEach((showName) => {
+      let option = document.createElement("option");
+      option.innerHTML = `${showName}`; // loops over the tv show data
+      select.appendChild(option);
+      console.log(showName)
+    });
+   
+   */
   select.addEventListener("change", function (event) {
     let episodeContainers = document.getElementsByClassName(
       "episode-container-class-name"
@@ -42,7 +64,7 @@ function addShowSelector(showData) {
 
     getAllEpisodesApi(showId); // this call gets the all the episodes
 
-   // console.log("test", showData[optionId]);
+    // console.log("test", showData[optionId]);
     let styleContainer = document.getElementById("styleContainer");
     styleContainer.innerHTML = "";
 
@@ -299,7 +321,7 @@ const addHeader = (episodeList, showData) => {
   navBarContainer.appendChild(dropDown);
 };
 
-function makePageForEpisodes(episodeList) {
+function makePageForEpisodes(episodeList) { // add elements to the dom
   const tvShowData = getAllShows();
   addAllEpisodes(episodeList);
   addHeader(episodeList, tvShowData);
