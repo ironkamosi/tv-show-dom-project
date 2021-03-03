@@ -3,7 +3,6 @@
 function compare(showOne, showTwo) {
   // its comparing the content of the elements, it tries to understand the position of the string elements
   // console.log(showOne);
-
   if (showOne.name.toLowerCase() < showTwo.name.toLowerCase()) {
     return -1;
   }
@@ -45,13 +44,14 @@ function addShowSelector(showData) {
     let showId = showData[optionId].id;
     // for every item duplicate we need an test to see if it exists
 
-    getAllEpisodesApi(showId); // this call gets the all the episodes
+   
+    let styleContainer = document.getElementById("styleContainer");
+    styleContainer.innerHTML = ""; // its removing all the episode containers
+    getAllEpisodesApi(showId); // this call gets the all the episodes it gets the data and calls add all episodes , add allEpisodes creates the containers
     //addDropDownMenu(episodeList) // creates an error
     // console.log("test", showData[optionId]);
 
 
-    let styleContainer = document.getElementById("styleContainer");
-    styleContainer.innerHTML = ""; // its removing all the episode containers
 
     // fetch(`https://api.tvmaze.com/shows/${id}/episodes`)
     //   .then((response) => response.json().then((data) => data))
@@ -97,13 +97,17 @@ function addFooter() {
 }
 
 const hideEpisode = (episode) => {
-  episode.style.display = "none";
-  // console.log("test",episode);
+  // console.log("test", episode);
+  if (episode) {
+   episode.style.display = "none";
+  }
 
 };
 
 const showEpisode = (episode) => {
+  if (episode) {
   episode.style.display = "";
+  }
 };
 
 // formats the number for the season data
@@ -201,7 +205,7 @@ function upDateDropDownMenu(episodeList) {
   }
 }
 
-const addDropDownMenu = (episodeList) => {
+const addDropDownMenu = (episodeList) => { // select on the right 
   let option;
   let select = document.getElementById("select");
 
@@ -231,38 +235,55 @@ const addDropDownMenu = (episodeList) => {
 
   select.addEventListener("change", function (event) {
     let episodeContainers = document.getElementsByClassName(
-      "episode-container-class-name"
+"episode-container-class-name"
     ); // An array of episode container
     //let navBarContainer = document.getElementById("navBarContainer");
+    // console.log(`episodeList length${episodeList.length}`);
+    // console.log(`episodeContainers${episodeContainers.length}`);
+
+
     let episodeIndex = 0;
     let episodeCounter = 0;
     if (event.target.options[event.target.selectedIndex].index === 0) {
       // refers to the all episode option
       episodeList.forEach(() => {
+
         episodeCounter = episodeList.length;
         episodeContainers[episodeIndex].style.display = "";
         episodeIndex++; // This increments});
       });
     } else {
+      // console.log("before we hide episode", episodeList.length)
       episodeList.forEach(() => {
+      // console.log(`EpisodeList in forEach${episodeIndex}`);
+      // console.log(`Index of the if${event.target.options[event.target.selectedIndex].index - 1}`);
+      // console.log(`episode containers${episodeContainers}`);
+
         if (
           episodeIndex ===
           event.target.options[event.target.selectedIndex].index - 1 // test if the current index is equal to the index
         ) {
+          // console.log(`showEpisode in if statement${episodeIndex}`);
+          // console.log(`Episode Container ${episodeContainers}`)
+
           showEpisode(episodeContainers[episodeIndex]); //.style.display = "";
+          // console.log("if condition ", episodeContainers[episodeIndex]);
         } else {
+          // console.log(`hideEpisode in else statement ${episodeIndex} `, episodeContainers[episodeIndex]);
+          console.log(episodeContainers.length, episodeIndex)
           hideEpisode(episodeContainers[episodeIndex]); //.style.display = "none";
+
         }
-        episodeIndex++; // This increments});
+        episodeIndex++; // This increments until it matches the episode index});
       });
-      episodeCounter = 1;
+      episodeCounter = 1; // It keeps counting until it reaches the end of the array
     }
     updateCounter(episodeCounter, episodeList.length);
   });
   return select;
 };
 
-// counter function display
+// counter function display creates the dom
 const addCounter = (_) => {
   counterDisplay = document.createElement("div");
   counterDisplay.setAttribute("id", "counterDisplayID");
@@ -319,14 +340,14 @@ const addSearchBox = (episodeList) => {
        }
        else if((episode.name == null || episode.name == "") || (episode.summary == null || episode.summary == "")){
         hideEpisode(episodeContainers[episodeIndex]);
-        informationMissing.innerText = "Sorry, the keyword does not exist in database"
-        errorContainer.appendChild(informationMissing)
+        // informationMissing.innerText = "Sorry, the keyword does not exist in database"
+        // errorContainer.appendChild(informationMissing)
         //console.log(informationMissing.innerText)
       }else {
          hideEpisode(episodeContainers[episodeIndex]);
-         informationMissing.innerText = "Sorry, the keyword does not exist in database";
-         errorContainer.appendChild(informationMissing);
-         //console.log(errorContainer)
+        //  informationMissing.innerText = "Sorry, the keyword does not exist in database";
+        //  errorContainer.appendChild(informationMissing);
+        //  console.log(errorContainer)
       }
       episodeIndex++;
     });
@@ -395,7 +416,7 @@ let episodes; // global variable that contains the episodes/ data from the api
 
 function getAllEpisodesApi(id) {
   // function to get the apis
-  let arrayOfEpisodes;
+  // let arrayOfEpisodes;
   fetch(`https://api.tvmaze.com/shows/${id}/episodes`)
     .then((response) => response.json().then((data) => data)) // return response.json this gathers the data
     .then((allEpisodes) => {
@@ -405,3 +426,23 @@ function getAllEpisodesApi(id) {
     .catch((error) => console.log(error));
 }
 window.onload = setup; // when the browser is load call set up
+
+
+/*
+1 counter code - 
+update the counter code
+issue: when show changes the counter doesnt update
+
+2-Missing data
+create a condition that checks that the all the fields I am displaying in the data
+
+name
+medium.img
+summary
+
+message blank
+
+
+
+
+*/
