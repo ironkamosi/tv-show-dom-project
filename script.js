@@ -7,10 +7,42 @@ function getAllTvShowsApi() {
   mainContainer.setAttribute("id", "mainContainer");
   rootDiv.appendChild(mainContainer);
   const allTvShowData = getAllShows().sort(compare);
+  tvShowHeaderFooter();
   allTvShowData.forEach((tvShow) => {
     //console.log(allTvShowData[0])
-    mainContainer.appendChild(allTvShowsListings(tvShow));
+  mainContainer.appendChild(allTvShowsListings(tvShow));
   });
+}
+
+
+/*const btn = document.querySelector('.btn');
+btn.addEventListener('click', function(event){
+   console.log('Button Clicked');
+}); */
+
+
+function homeReturnBtn() { //button which returns user home
+  let btn = document.createElement("button");
+  let navBarContainer = document.getElementById("navBarContainer");
+  
+  navBarContainer.appendChild(btn);
+  btn.setAttribute("id", "returnBtn");
+  btn.innerText = "return";
+  
+  btn.addEventListener("click", () => {
+    // getAllTvShowsApi();
+
+  });
+}
+
+
+
+function tvShowHeaderFooter() {
+  // renders the header and footer when a transition from the main page happens
+  const tvShowData = getAllShows();
+  addHeader(tvShowData);
+  homeReturnBtn()
+  addFooter();
 }
 
 
@@ -35,6 +67,9 @@ function allTvShowsListings(tvShow) {
     getAllEpisodesApi(showId); // this will display episodes for this show id
     
   });
+
+
+
 
   const summaryImageDiv = document.createElement("div");
   summaryImageDiv.setAttribute("id", "summaryImageDiv");
@@ -122,9 +157,10 @@ function addShowSelector(showData) {
     let showId = showData[optionId].id;
     // for every item duplicate we need an test to see if it exists
 
-   
     let styleContainer = document.getElementById("styleContainer");
-    styleContainer.innerHTML = ""; // its removing all the episode containers
+    if (styleContainer !== null) {
+      styleContainer.innerHTML = ""; // its removing all the episode containers
+    }
     getAllEpisodesApi(showId); // this call gets the all the episodes it gets the data and calls adds all episodes , add allEpisodes creates the containers
     //addDropDownMenu(episodeList) // creates an error
     // console.log("test", showData[optionId]);
@@ -287,52 +323,49 @@ const addDropDownMenu = (episodeList) => { // select on the right  // checks if 
   let option;
   let select = document.getElementById("select");
 
-  if (select === null) { // this condition prevents duplication 
+  // if (select === null) { // this condition prevents duplication 
     select = document.createElement("select");
     select.setAttribute("id", "select");
     option = document.createElement("option");
     option.innerText = "All episodes";
     select.appendChild(option);
-  } else {
-    // let options = select.getElementsByTagName("option");
-    // console.log("test", options);
-    // select.innerHTML = "";
-    for (let index = select.options.length; index > 0; index--) { // this removes the options 
-      // this will go through the loop starting at the end and for each element it will remove all the options before it rebuilds it
-      select.remove(index);
-    }
-  }
+  // } else {
+  //   // let options = select.getElementsByTagName("option");
+  //   // console.log("test", options);
+  //   // select.innerHTML = "";
+  //   for (let index = select.options.length; index > 0; index--) { // this removes the options 
+  //     // this will go through the loop starting at the end and for each element it will remove all the options before it rebuilds it
+  //     select.remove(index);
+  //   }
+  // }
 
-  episodeList.forEach((episode) => {
-    let option = document.createElement("option");
-    option.innerHTML = `${episode.name}: S${formatSeasonNum(
-      episode.season
-    )}E${formatSeasonNum(episode.number)}`;
-    select.appendChild(option);
-  });
+  // episodeList.forEach((episode) => {
+    // let option = document.createElement("option");
+    // option.innerHTML = `${episode.name}: S${formatSeasonNum(
+    //   episode.season
+    // )}E${formatSeasonNum(episode.number)}`;
+    // select.appendChild(option);
+  // });
 
   select.addEventListener("change", function (event) {
-    let episodeContainers = document.getElementsByClassName(
-"episode-container-class-name"
-    ); // An array of episode container
+    let episodeContainers = document.getElementsByClassName("episode-container-class-name"); // An array of episode container
     //let navBarContainer = document.getElementById("navBarContainer");
     // console.log(`episodeList length${episodeList.length}`);
     // console.log(`episodeContainers${episodeContainers.length}`);
-
-
-    let episodeIndex = 0;
+    // let episodeIndex = 0;
     let episodeCounter = 0;
+    let containers = Array.from(episodeContainers);
+
     if (event.target.options[event.target.selectedIndex].index === 0) {
       // refers to the all episode option
-      episodeList.forEach(() => {
-
-        episodeCounter = episodeList.length;
-        episodeContainers[episodeIndex].style.display = "";
-        episodeIndex++; // This increments});
+        containers.forEach((container) => {
+        episodeCounter = containers.length;
+        container.style.display = "";
+        // episodeIndex++; // This increments});
       });
     } else {
       // console.log("before we hide episode", episodeList.length)
-      episodeList.forEach(() => {
+      containers.forEach((container,episodeIndex) => {
       // console.log(`EpisodeList in forEach${episodeIndex}`);
       // console.log(`Index of the if${event.target.options[event.target.selectedIndex].index - 1}`);
       // console.log(`episode containers${episodeContainers}`);
@@ -340,23 +373,16 @@ const addDropDownMenu = (episodeList) => { // select on the right  // checks if 
         if (
           episodeIndex ===
           event.target.options[event.target.selectedIndex].index - 1 // test if the current index is equal to the index
-        ) {
-          // console.log(`showEpisode in if statement${episodeIndex}`);
-          // console.log(`Episode Container ${episodeContainers}`)
-
-          showEpisode(episodeContainers[episodeIndex]); //.style.display = "";
-          // console.log("if condition ", episodeContainers[episodeIndex]);
+        ) {  
+          showEpisode(container); //.style.display = "";
         } else {
-          // console.log(`hideEpisode in else statement ${episodeIndex} `, episodeContainers[episodeIndex]);
-          console.log(episodeContainers.length, episodeIndex)
-          hideEpisode(episodeContainers[episodeIndex]); //.style.display = "none";
-
+          hideEpisode(container); //.style.display = "none";
         }
-        episodeIndex++; // This increments until it matches the episode index});
+        // episodeIndex++; // This increments until it matches the episode index});
       });
       episodeCounter = 1; // It keeps counting until it reaches the end of the array
     }
-    updateCounter(episodeCounter, episodeList.length);
+    updateCounter(episodeCounter, containers.length);
   });
   return select;
 };
@@ -440,7 +466,7 @@ const addSearchBox = (episodeList) => {
   return inputBox;
 };
 
-const addHeader = (episodeList, showData) => {
+const addHeader = (showData) => { // changed the order of arguments // removed episodeList to ensure general purpose use
   const rootElem = document.getElementById("root");
   let body = document.querySelector("body");
 
@@ -457,15 +483,15 @@ const addHeader = (episodeList, showData) => {
     const showSelector = addShowSelector(showData);
     navBarContainer.appendChild(showSelector);
 
-    const inputBox = addSearchBox(episodeList);
+    const inputBox = addSearchBox(showData);// changed it from episodeList
     navBarContainer.appendChild(inputBox);
     const counter = addCounter();
 
     navBarContainer.appendChild(counter);
-    updateCounter(episodeList.length, episodeList.length);
+    updateCounter(showData.length, showData.length); // how many are we showing/ how many are there in total
   }
 
-  const dropDown = addDropDownMenu(episodeList);
+  const dropDown = addDropDownMenu();
   navBarContainer.appendChild(dropDown);
 };
 
