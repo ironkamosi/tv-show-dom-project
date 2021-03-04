@@ -16,3 +16,29 @@
   margin-top: 2em;
   margin-bottom: 1em;
 }
+
+#infoContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border: 2px solid grey;
+  border-radius: 5px;
+  margin: 1em;
+}
+#mainTvInfo h2 {
+  margin-left: 1em;
+}
+#summaryImageDiv {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+#summaryImageDiv img, p {
+  margin-left: 1em;
+}
+#tvShowsInfo {
+  border: 2px solid grey;
+  border-radius: 5px;
+  margin-left: 1em;
+  margin-right: 1em;
+}
