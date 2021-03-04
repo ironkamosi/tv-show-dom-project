@@ -1,5 +1,83 @@
 //You can edit ALL of the code here
-// global variable 
+
+// level 500 
+function getAllTvShowsApi() {
+  const rootDiv = document.getElementById("root");
+  const mainContainer = document.createElement("div");
+  mainContainer.setAttribute("id", "mainContainer");
+  rootDiv.appendChild(mainContainer);
+  const allTvShowData = getAllShows().sort(compare);
+  allTvShowData.forEach((tvShow) => {
+    //console.log(allTvShowData[0])
+    mainContainer.appendChild(allTvShowsListings(tvShow));
+  });
+}
+
+
+function allTvShowsListings(tvShow) {
+  let tvShowsInfoContainer = document.createElement("div");
+  tvShowsInfoContainer.className ="infoContainer";
+  
+  const mainTvInfo = document.createElement("div");
+  mainTvInfo.setAttribute("id", "mainTvInfo");
+
+  let tvShowsTitle = document.createElement("h2");
+  tvShowsTitle.setAttribute("showId", tvShow.id);
+
+  tvShowsTitle.addEventListener("click", (event) => {
+    // this hides the tv show when the tv show is selected the episodes appear
+    let showId = event.target.getAttribute("showId");
+    // console.log(showId);
+    let arrayOfTvContainers = document.querySelectorAll(".infoContainer") 
+    Array.from(arrayOfTvContainers).forEach((element) => { // converts dom element into an array in order to use the for each
+        element.style.display = "none";
+     });
+    getAllEpisodesApi(showId); // this will display episodes for this show id
+    
+  });
+
+  const summaryImageDiv = document.createElement("div");
+  summaryImageDiv.setAttribute("id", "summaryImageDiv");
+  let tvShowsImage = document.createElement("img");
+  let tvShowsSummary = document.createElement("p");
+  let tvShowsInfo = document.createElement("ul");
+  tvShowsInfo.setAttribute("id", "tvShowsInfo");
+  let tvShowsRating = document.createElement("li");
+  let tvShowsGenre = document.createElement("li");
+  let tvShowsStatus = document.createElement("li");
+  let tvShowsRunTime = document.createElement("li");
+  tvShowsTitle.innerHTML = tvShow.name;
+
+  if (tvShow.image === null || tvShow.image === "") {
+    tvShowsImage.src = "img/error.jpg";
+  } else {
+    tvShowsImage.src = tvShow.image.medium;
+  }
+
+  tvShowsSummary.innerHTML = tvShow.summary;
+  tvShowsRating.innerHTML = tvShow.rating.average;
+  tvShowsGenre.innerHTML = tvShow.genres;
+  tvShowsStatus.innerHTML = tvShow.status;
+  tvShowsRunTime.innerHTML = tvShow.runtime;
+
+  mainTvInfo.appendChild(tvShowsTitle);
+  mainTvInfo.appendChild(summaryImageDiv);
+  summaryImageDiv.appendChild(tvShowsImage);
+  summaryImageDiv.appendChild(tvShowsSummary);
+  tvShowsInfoContainer.appendChild(mainTvInfo);
+  tvShowsInfoContainer.appendChild(tvShowsInfo);
+  tvShowsInfo.appendChild(tvShowsRating);
+  tvShowsInfo.appendChild(tvShowsGenre);
+  tvShowsInfo.appendChild(tvShowsStatus);
+  tvShowsInfo.appendChild(tvShowsRunTime);
+  //console.log(tvShowsInfoContainer);
+  return tvShowsInfoContainer;
+}
+//-------------------------------------------------------------------------------------------------------
+
+
+
+
 function compare(showOne, showTwo) {
   // its comparing the content of the elements, it tries to understand the position of the string elements
   // console.log(showOne);
@@ -47,7 +125,7 @@ function addShowSelector(showData) {
    
     let styleContainer = document.getElementById("styleContainer");
     styleContainer.innerHTML = ""; // its removing all the episode containers
-    getAllEpisodesApi(showId); // this call gets the all the episodes it gets the data and calls add all episodes , add allEpisodes creates the containers
+    getAllEpisodesApi(showId); // this call gets the all the episodes it gets the data and calls adds all episodes , add allEpisodes creates the containers
     //addDropDownMenu(episodeList) // creates an error
     // console.log("test", showData[optionId]);
 
@@ -98,16 +176,16 @@ function addFooter() {
 
 const hideEpisode = (episode) => {
   // console.log("test", episode);
-  if (episode) {
+  // if (episode) {
    episode.style.display = "none";
-  }
+  // }
 
 };
 
 const showEpisode = (episode) => {
-  if (episode) {
+  // if (episode) {
   episode.style.display = "";
-  }
+  // }
 };
 
 // formats the number for the season data
@@ -190,7 +268,7 @@ const addAllEpisodes = (episodeList) => {
 };
 
 function upDateDropDownMenu(episodeList) {
-  //goes through the options removes the options and recreates the opitons in the second loop
+  //goes through the options removes the options and recreates the options in the second loop
   let select = document.getElementById("select");
   if (select !== null) {
     for (let index = select.options.length; index > 0; index--) {
@@ -205,11 +283,11 @@ function upDateDropDownMenu(episodeList) {
   }
 }
 
-const addDropDownMenu = (episodeList) => { // select on the right 
+const addDropDownMenu = (episodeList) => { // select on the right  // checks if the drop down exist it creates it else it removes the options 222
   let option;
   let select = document.getElementById("select");
 
-  if (select === null) {
+  if (select === null) { // this condition prevents duplication 
     select = document.createElement("select");
     select.setAttribute("id", "select");
     option = document.createElement("option");
@@ -219,7 +297,7 @@ const addDropDownMenu = (episodeList) => { // select on the right
     // let options = select.getElementsByTagName("option");
     // console.log("test", options);
     // select.innerHTML = "";
-    for (let index = select.options.length; index > 0; index--) {
+    for (let index = select.options.length; index > 0; index--) { // this removes the options 
       // this will go through the loop starting at the end and for each element it will remove all the options before it rebuilds it
       select.remove(index);
     }
@@ -425,7 +503,8 @@ function getAllEpisodesApi(id) {
     }) // this does not get called until we get the data
     .catch((error) => console.log(error));
 }
-window.onload = setup; // when the browser is load call set up
+// window.onload = setup; // when the browser is load call set up
+window.onload = getAllTvShowsApi;
 
 
 /*
