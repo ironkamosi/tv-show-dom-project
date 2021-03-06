@@ -33,6 +33,9 @@ function homeReturnBtn() {
     let episodeSelector = document.querySelector("#select"); // hide the tv episodes when the button is pressed
     episodeSelector.style.display = "none";
 
+    let tvShowSelector = document.querySelector("#select-tv"); // hide the tv episodes when the button is pressed
+    tvShowSelector.style.display = "";
+
     let episodeContainers = document.getElementsByClassName(
       "episode-container-class-name"
     ); // An array of episode container
@@ -73,6 +76,9 @@ function allTvShowsListings(tvShow) {
   tvShowsTitle.setAttribute("showId", tvShow.id);
 
   tvShowsTitle.addEventListener("click", (event) => {
+    let tvSelector = document.querySelector("#select-tv"); // hide the tv episodes when the button is pressed
+    tvSelector.style.display = "none";
+
     // when show title is clicked we load the episodes fpr selected show
     let btn = document.getElementById("returnBtn");
     btn.style.display = "";
@@ -143,7 +149,6 @@ function compare(showOne, showTwo) {
   return 0;
 }
 
-
 // when logic is done call in the eventListener
 // tv input selector
 function addShowSelector(showData) {
@@ -169,10 +174,7 @@ function addShowSelector(showData) {
   //compare the two fields and the array
   // it also fails with the hide and show
   select.addEventListener("change", function (event) {
-    let episodeContainers = document.getElementsByClassName("episode-container-class-name");
-    
     // An array of episode container
-
     let optionId = event.target.options[event.target.selectedIndex].index;
     let showId = showData[optionId].id;
     // for every item duplicate we need an test to see if it exists
@@ -182,7 +184,25 @@ function addShowSelector(showData) {
       styleContainer.innerHTML = ""; // its removing all the episode containers
     }
     getAllEpisodesApi(showId); // this call gets the all the episodes it gets the data and calls adds all episodes , add allEpisodes creates the containers
-   
+
+    //--------------------------------------------------------------
+    let tvSelector = document.querySelector("#select-tv"); // hide the tv episodes when the button is pressed
+    tvSelector.style.display = "none";
+
+    // when show title is clicked we load the episodes fpr selected show
+    let btn = document.getElementById("returnBtn");
+    btn.style.display = "";
+    let select = document.getElementById("select");
+    if (select) {
+      select.style.display = "";
+    }
+
+    // this hides the tv show when the tv show is selected the episodes appear
+    let arrayOfTvContainers = document.querySelectorAll(".infoContainer");
+    Array.from(arrayOfTvContainers).forEach((element) => {
+      // converts dom element into an array in order to use the for each
+      element.style.display = "none";
+    });
   });
 
   return select;
@@ -200,15 +220,11 @@ function addFooter() {
 }
 
 const hideEpisode = (episode) => {
-
   episode.style.display = "none";
-  
 };
 
 const showEpisode = (episode) => {
- 
   episode.style.display = "";
-  
 };
 
 // formats the number for the season data
@@ -321,12 +337,11 @@ const addDropDownMenu = (episodeList) => {
   option.innerText = "All episodes";
   select.appendChild(option);
 
-
   select.addEventListener("change", function (event) {
     let episodeContainers = document.getElementsByClassName(
       "episode-container-class-name"
     ); // An array of episode container
-  
+
     let episodeCounter = 0;
     let containers = Array.from(episodeContainers);
 
@@ -340,7 +355,6 @@ const addDropDownMenu = (episodeList) => {
     } else {
       // console.log("before we hide episode", episodeList.length)
       containers.forEach((container, episodeIndex) => {
-       
         if (
           episodeIndex ===
           event.target.options[event.target.selectedIndex].index - 1 // test if the current index is equal to the index
@@ -368,18 +382,16 @@ const addCounter = (_) => {
   return counterDisplay;
 };
 
-
 function updateCounter(numberOfEpisodes, totalEpisodes) {
   // counter for number of episode found in search
   let counterDisplay = document.querySelector("#counterDisplayID");
   counterDisplay.innerText = `Displaying ${numberOfEpisodes} / ${totalEpisodes} episodes`; // update of the counter
 }
 
+let tvShowData = getAllShows().sort(compare);
 
-  let tvShowData = getAllShows().sort(compare);
-
-
-function searchTvShowData(searchString) { //
+function searchTvShowData(searchString) {
+  //
 
   // console.log("inside tv show", searchString)
   // searches for data specifically for the tv show episodes
@@ -387,40 +399,32 @@ function searchTvShowData(searchString) { //
   // let episodeIndex = 0;
   let episodeCount = 0; // this is the number of episodes that match the key word search string
 
-
   let tvShowsInfoContainers = document.getElementsByClassName("infoContainer");
 
   tvShowData.forEach((data, index) => {
-
+    let [genresDestructed] = data.genres;
     if (
       // searchString.includes("24" && data.name.includes("24"))
-      data.name.toLowerCase().includes(searchString)||
-      data.summary.toLowerCase().includes(searchString)
-      // data.genre.toLowerCase().includes(searchString)
+      data.name.toLowerCase().includes(searchString) ||
+      data.summary.toLowerCase().includes(searchString) ||
+      data.genres.toLowerCase().includes(searchString)
     ) {
       // console.log(`data name${data.name}| search string${searchString} | current index${index}`)
-          // console.log("data name", data.name, "search string", searchString);
+      // console.log("data name", data.name, "search string", searchString);
 
       showEpisode(tvShowsInfoContainers[index]);
       episodeCount++;
-    }
-
-    else if (
+    } else if (
       data.name == null ||
       data.name == "" ||
-
       data.summary == null ||
       data.summary == "" ||
-
-      data.genre == null ||
-      data.genre == ""
-    )
-
-    {
+      data.genres == null ||
+      data.genres == ""
+    ) {
       // console.log("hiding episode")
       hideEpisode(tvShowsInfoContainers[index]);
-    }
-    else {
+    } else {
       hideEpisode(tvShowsInfoContainers[index]);
     }
     // episodeIndex++;
@@ -428,23 +432,23 @@ function searchTvShowData(searchString) { //
   updateCounter(episodeCount, tvShowData.length);
 }
 
-
-
 function searchEpisodeData(searchString) {
-    // console.log("inside Search Episodes");
+  // console.log("inside Search Episodes");
 
-  let episodeContainers = document.getElementsByClassName("episode-container-class-name"); // An array of episode container
-//  let tvShowData = getAllShows();
+  let episodeContainers = document.getElementsByClassName(
+    "episode-container-class-name"
+  ); // An array of episode container
+  //  let tvShowData = getAllShows();
 
   // searches for data specifically for the tv show listings
   let episodeIndex = 0;
   let episodeCount = 0; // this is the number of episodes that match the key word search string
 
   // access the data through the array
-  tvShowData.forEach((data) => {
+  episodes.forEach((data) => {
     if (
       data.name.toLowerCase().includes(searchString) ||
-      episode.summary.toLowerCase().includes(searchString)
+      data.summary.toLowerCase().includes(searchString)
     ) {
       episodeCount++;
       showEpisode(episodeContainers[episodeIndex]);
@@ -460,10 +464,8 @@ function searchEpisodeData(searchString) {
     }
     episodeIndex++;
   });
-  updateCounter(episodeCount, tvShowData.length);
+  updateCounter(episodeCount, episodes.length);
 }
-
-
 
 const addSearchBox = (episodeList) => {
   let inputBox = document.getElementById("inputBoxId");
@@ -476,19 +478,18 @@ const addSearchBox = (episodeList) => {
     inputBox.style.backgroundColor = "#f5f5f5";
     inputBox.style.margin = "0.8em"; // spacing to the left of episode list
   }
- 
+
   inputBox.addEventListener("keyup", (event) => {
     const searchString = event.target.value.toLowerCase();
     let tvSelectDom = document.querySelector("#select-tv");
-    
-    if (tvSelectDom === null) { // this checks whether the tv show or the episodes state exist, if so we call the data function 
-    searchEpisodeData(searchString);// every time you type data the inbox addEventListener is called 
+
+    if (tvSelectDom.style.display === "none") {
+      // this checks whether the tv show or the episodes state exist, if so we call the data function
+      searchEpisodeData(searchString); // every time you type data the inbox addEventListener is called
     } else {
-      searchTvShowData(searchString); 
+      searchTvShowData(searchString);
     }
-    
-   
-    
+
     // // const searchString = event.target.value.toLowerCase(); // gets search string from input
     // let episodeIndex = 0;
     // let episodeCount = 0; // this is the number of episodes that match the key word search string
