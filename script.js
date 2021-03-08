@@ -25,7 +25,7 @@ function homeReturnBtn() {
   let navBarContainer = document.getElementById("navBarContainer");
 
   btn.setAttribute("id", "returnBtn");
-  btn.innerText = "return";
+  btn.innerText = "Home";
   navBarContainer.appendChild(btn);
 
   btn.addEventListener("click", () => {
@@ -53,6 +53,9 @@ function homeReturnBtn() {
         tvShowsInfoContainer.style.display = "";
       });
     }
+    updateCounter(getAllShows().length, getAllShows().length); // this updates the counter when the return button is fired
+    
+
   });
 }
 
@@ -78,6 +81,12 @@ function allTvShowsListings(tvShow) {
   tvShowsTitle.addEventListener("click", (event) => {
     let tvSelector = document.querySelector("#select-tv"); // hide the tv episodes when the button is pressed
     tvSelector.style.display = "none";
+
+    // removes unwanted episodes when user inputs key term into the search box
+    let styleContainer = document.getElementById("styleContainer");
+    if (styleContainer !== null) {
+      styleContainer.innerHTML = ""; // its removing all the episode containers
+    }
 
     // when show title is clicked we load the episodes fpr selected show
     let btn = document.getElementById("returnBtn");
@@ -108,6 +117,7 @@ function allTvShowsListings(tvShow) {
   let tvShowsGenre = document.createElement("li");
   let tvShowsStatus = document.createElement("li");
   let tvShowsRunTime = document.createElement("li");
+  
   tvShowsTitle.innerHTML = tvShow.name;
 
   if (tvShow.image === null || tvShow.image === "") {
@@ -117,10 +127,10 @@ function allTvShowsListings(tvShow) {
   }
 
   tvShowsSummary.innerHTML = tvShow.summary;
-  tvShowsRating.innerHTML = tvShow.rating.average;
+  tvShowsRating.innerHTML = `Rating:${tvShow.rating.average}`;
   tvShowsGenre.innerHTML = tvShow.genres;
-  tvShowsStatus.innerHTML = tvShow.status;
-  tvShowsRunTime.innerHTML = tvShow.runtime;
+  tvShowsStatus.innerHTML = `Status:${tvShow.status}`;
+  tvShowsRunTime.innerHTML = `Runtime:${tvShow.runtime} minutes`;
 
   mainTvInfo.appendChild(tvShowsTitle);
   mainTvInfo.appendChild(summaryImageDiv);
@@ -184,7 +194,6 @@ function addShowSelector(showData) {
       styleContainer.innerHTML = ""; // its removing all the episode containers
     }
     getAllEpisodesApi(showId); // this call gets the all the episodes it gets the data and calls adds all episodes , add allEpisodes creates the containers
-
     //--------------------------------------------------------------
     let tvSelector = document.querySelector("#select-tv"); // hide the tv episodes when the button is pressed
     tvSelector.style.display = "none";
@@ -288,9 +297,13 @@ function addSingleEpisode(episode) {
 // container for the single episodes
 const addAllEpisodes = (episodeList) => {
   // addDropDownMenu(episodeList);
+
   upDateDropDownMenu(episodeList);
   const rootElem = document.getElementById("root");
   let styleContainer = document.getElementById("styleContainer");
+  let footer = document.getElementById("footer");
+  // let mainContainerId = document.getElementById("mainContainer");
+  // let body = document.querySelector("body");
 
   if (styleContainer === null) {
     styleContainer = document.createElement("div");
@@ -299,7 +312,8 @@ const addAllEpisodes = (episodeList) => {
     styleContainer.style.width = "98%";
     styleContainer.style.flexWrap = "wrap";
     styleContainer.style.margin = "0 auto";
-    rootElem.appendChild(styleContainer);
+    rootElem.insertBefore(styleContainer, footer);
+    ///rootElem.appendChild(styleContainer);
   }
   episodeList.forEach((episode) => {
     styleContainer.appendChild(addSingleEpisode(episode));
@@ -382,10 +396,19 @@ const addCounter = (_) => {
   return counterDisplay;
 };
 
-function updateCounter(numberOfEpisodes, totalEpisodes) {
+function updateCounter(numberOfMovies, totalMovies) {
   // counter for number of episode found in search
+  let tvSelectDom = document.querySelector("#select-tv");
+  let tvShowDisplay;
+  // console.log("updateCounter", tvSelectDom.style.display);
+  if (tvSelectDom.style.display === "none") {
+    tvShowDisplay = "Episodes";
+  } else {
+    tvShowDisplay = "TvShow";
+  }
+
   let counterDisplay = document.querySelector("#counterDisplayID");
-  counterDisplay.innerText = `Displaying ${numberOfEpisodes} / ${totalEpisodes} episodes`; // update of the counter
+  counterDisplay.innerText = `Displaying ${numberOfMovies} / ${totalMovies} ${tvShowDisplay}`; // update of the counter
 }
 
 let tvShowData = getAllShows().sort(compare);
@@ -402,12 +425,12 @@ function searchTvShowData(searchString) {
   let tvShowsInfoContainers = document.getElementsByClassName("infoContainer");
 
   tvShowData.forEach((data, index) => {
-    let [genresDestructed] = data.genres;
+    let genres = data.genres.toString(); // extracted data from the array of genres
     if (
       // searchString.includes("24" && data.name.includes("24"))
       data.name.toLowerCase().includes(searchString) ||
       data.summary.toLowerCase().includes(searchString) ||
-      data.genres.toLowerCase().includes(searchString)
+      genres.toLowerCase().includes(searchString)
     ) {
       // console.log(`data name${data.name}| search string${searchString} | current index${index}`)
       // console.log("data name", data.name, "search string", searchString);
@@ -581,6 +604,7 @@ function getAllEpisodesApi(id) {
     .then((allEpisodes) => {
       episodes = allEpisodes;
       addAllEpisodes(allEpisodes);
+      updateCounter(allEpisodes.length, allEpisodes.length); // This updates the counter to enable 
     }) // this does not get called until we get the data
     .catch((error) => console.log(error));
 }
