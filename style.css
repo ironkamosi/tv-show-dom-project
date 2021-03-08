@@ -1,5 +1,5 @@
 #root {
-  color: red;
+  color:black;
 }
 
 .style-container {
@@ -49,4 +49,7 @@
 background-color: azure;
 margin: 0  auto;
 margin-left: 1em;
+}
+.tvShowTitleClass-hoover:hover{
+  background-color: coral;
 }

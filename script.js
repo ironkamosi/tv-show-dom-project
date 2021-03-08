@@ -1,8 +1,3 @@
-//You can edit ALL of the code here
-
-// let btn = document.createElement("button");
-// btn.setAttribute("id", "returnBtn");
-// btn.innerText = "return";
 
 // level 500
 function getAllTvShowsApi() {
@@ -13,7 +8,6 @@ function getAllTvShowsApi() {
   const allTvShowData = getAllShows().sort(compare);
   tvShowHeaderFooter();
   allTvShowData.forEach((tvShow) => {
-    //console.log(allTvShowData[0])
     mainContainer.appendChild(allTvShowsListings(tvShow));
   });
 }
@@ -77,6 +71,7 @@ function allTvShowsListings(tvShow) {
 
   let tvShowsTitle = document.createElement("h2");
   tvShowsTitle.setAttribute("showId", tvShow.id);
+  tvShowsTitle.className = "tvShowTitleClass-hoover"
 
   tvShowsTitle.addEventListener("click", (event) => {
     let tvSelector = document.querySelector("#select-tv"); // hide the tv episodes when the button is pressed
@@ -98,7 +93,6 @@ function allTvShowsListings(tvShow) {
 
     // this hides the tv show when the tv show is selected the episodes appear
     let showId = event.target.getAttribute("showId");
-    // console.log(showId);
     let arrayOfTvContainers = document.querySelectorAll(".infoContainer");
     Array.from(arrayOfTvContainers).forEach((element) => {
       // converts dom element into an array in order to use the for each
@@ -149,7 +143,6 @@ function allTvShowsListings(tvShow) {
 
 function compare(showOne, showTwo) {
   // its comparing the content of the elements, it tries to understand the position of the string elements
-  // console.log(showOne);
   if (showOne.name.toLowerCase() < showTwo.name.toLowerCase()) {
     return -1;
   }
@@ -163,11 +156,6 @@ function compare(showOne, showTwo) {
 // tv input selector
 function addShowSelector(showData) {
   const rootElem = document.getElementById("root");
-
-  // let select = document.getElementById("select-tv"); // this only adds the show select if it is not present in the DOM
-  // console.log("test", select);
-
-  //  if (select === null) {
   // this only works if the element does not exist
   select = document.createElement("select");
   select.setAttribute("id", "select-tv");
@@ -269,10 +257,8 @@ function addSingleEpisode(episode) {
   let img = document.createElement("img");
   img.style.margin = "0 auto";
   img.style.width = "99%";
-  // img.style.paddingLeft = "2em";
-  // img.style.paddingRight = "2em";
+
   if (episode.image == null || episode.image == "") {
-    //console.log("test",episode.image)
     img.src = "./img/error.jpg";
   } else {
     img.src = episode.image.medium;
@@ -290,20 +276,17 @@ function addSingleEpisode(episode) {
   episodeContainer.appendChild(title);
   episodeContainer.appendChild(img);
   episodeContainer.appendChild(summary);
-  //rootElem.appendChild(episodeContainer);
   return episodeContainer;
 }
 
 // container for the single episodes
 const addAllEpisodes = (episodeList) => {
-  // addDropDownMenu(episodeList);
 
   upDateDropDownMenu(episodeList);
   const rootElem = document.getElementById("root");
   let styleContainer = document.getElementById("styleContainer");
   let footer = document.getElementById("footer");
-  // let mainContainerId = document.getElementById("mainContainer");
-  // let body = document.querySelector("body");
+
 
   if (styleContainer === null) {
     styleContainer = document.createElement("div");
@@ -313,7 +296,6 @@ const addAllEpisodes = (episodeList) => {
     styleContainer.style.flexWrap = "wrap";
     styleContainer.style.margin = "0 auto";
     rootElem.insertBefore(styleContainer, footer);
-    ///rootElem.appendChild(styleContainer);
   }
   episodeList.forEach((episode) => {
     styleContainer.appendChild(addSingleEpisode(episode));
@@ -342,7 +324,7 @@ const addDropDownMenu = (episodeList) => {
   // select on the right  // checks if the drop down exist it creates it else it removes the options 222
   let option;
 
-  // if (select === null) { // this condition prevents duplication
+  // this condition prevents duplication
   select = document.createElement("select");
   select.style.display = "none"; // hide select episodes on the tv show listing
 
@@ -364,10 +346,8 @@ const addDropDownMenu = (episodeList) => {
       containers.forEach((container) => {
         episodeCounter = containers.length;
         container.style.display = "";
-        // episodeIndex++; // This increments});
       });
     } else {
-      // console.log("before we hide episode", episodeList.length)
       containers.forEach((container, episodeIndex) => {
         if (
           episodeIndex ===
@@ -377,7 +357,7 @@ const addDropDownMenu = (episodeList) => {
         } else {
           hideEpisode(container); //.style.display = "none";
         }
-        // episodeIndex++; // This increments until it matches the episode index});
+        // This increments until it matches the episode index});
       });
       episodeCounter = 1; // It keeps counting until it reaches the end of the array
     }
@@ -390,7 +370,6 @@ const addDropDownMenu = (episodeList) => {
 const addCounter = (_) => {
   counterDisplay = document.createElement("div");
   counterDisplay.setAttribute("id", "counterDisplayID");
-  //counterDisplay.style.backgroundColor = "blue";
   counterDisplay.style.marginTop = "0.5em"; // centre below
 
   return counterDisplay;
@@ -400,7 +379,6 @@ function updateCounter(numberOfMovies, totalMovies) {
   // counter for number of episode found in search
   let tvSelectDom = document.querySelector("#select-tv");
   let tvShowDisplay;
-  // console.log("updateCounter", tvSelectDom.style.display);
   if (tvSelectDom.style.display === "none") {
     tvShowDisplay = "Episodes";
   } else {
@@ -414,11 +392,7 @@ function updateCounter(numberOfMovies, totalMovies) {
 let tvShowData = getAllShows().sort(compare);
 
 function searchTvShowData(searchString) {
-  //
-
-  // console.log("inside tv show", searchString)
-  // searches for data specifically for the tv show episodes
-
+    // searches for data specifically for the tv show episodes
   // let episodeIndex = 0;
   let episodeCount = 0; // this is the number of episodes that match the key word search string
 
@@ -432,8 +406,6 @@ function searchTvShowData(searchString) {
       data.summary.toLowerCase().includes(searchString) ||
       genres.toLowerCase().includes(searchString)
     ) {
-      // console.log(`data name${data.name}| search string${searchString} | current index${index}`)
-      // console.log("data name", data.name, "search string", searchString);
 
       showEpisode(tvShowsInfoContainers[index]);
       episodeCount++;
@@ -445,18 +417,15 @@ function searchTvShowData(searchString) {
       data.genres == null ||
       data.genres == ""
     ) {
-      // console.log("hiding episode")
       hideEpisode(tvShowsInfoContainers[index]);
     } else {
       hideEpisode(tvShowsInfoContainers[index]);
     }
-    // episodeIndex++;
   });
   updateCounter(episodeCount, tvShowData.length);
 }
 
 function searchEpisodeData(searchString) {
-  // console.log("inside Search Episodes");
 
   let episodeContainers = document.getElementsByClassName(
     "episode-container-class-name"
@@ -512,32 +481,6 @@ const addSearchBox = (episodeList) => {
     } else {
       searchTvShowData(searchString);
     }
-
-    // // const searchString = event.target.value.toLowerCase(); // gets search string from input
-    // let episodeIndex = 0;
-    // let episodeCount = 0; // this is the number of episodes that match the key word search string
-
-    // // access the data through the array
-    // episodes.forEach((episode) => {
-    //   if (
-    //     episode.name.toLowerCase().includes(searchString) ||
-    //     episode.summary.toLowerCase().includes(searchString)
-    //   ) {
-    //     episodeCount++;
-    //     showEpisode(episodeContainers[episodeIndex]);
-    //   } else if (
-    //     episode.name == null ||
-    //     episode.name == "" ||
-    //     episode.summary == null ||
-    //     episode.summary == ""
-    //   ) {
-    //     hideEpisode(episodeContainers[episodeIndex]);
-    //   } else {
-    //     hideEpisode(episodeContainers[episodeIndex]);
-    //   }
-    //   episodeIndex++;
-    // });
-    // updateCounter(episodeCount, episodeList.length);
   });
 
   return inputBox;
@@ -590,8 +533,6 @@ function setup() {
     .then((response) => response.json().then((data) => data)) // remove the end of the json once bug is fixed with the header// return response.json this gathers the data
     .then((allEpisodes) => makePageForEpisodes(allEpisodes)) // this does nt get called until we get the data
     .catch((error) => console.log(error));
-
-  //getAllEpisodesApi(82);
 }
 
 let episodes; // global variable that contains the episodes/ data from the api
@@ -608,24 +549,10 @@ function getAllEpisodesApi(id) {
     }) // this does not get called until we get the data
     .catch((error) => console.log(error));
 }
-// window.onload = setup; // when the browser is load call set up
+
 window.onload = getAllTvShowsApi;
 
-/*
-1 counter code - 
-update the counter code
-issue: when show changes the counter doesnt update
-
-2-Missing data
-create a condition that checks that the all the fields I am displaying in the data
-
-name
-medium.img
-summary
-
-message blank
 
 
 
 
-*/
