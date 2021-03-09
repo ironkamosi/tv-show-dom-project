@@ -465,7 +465,7 @@ const addSearchBox = (episodeList) => {
     // this only works if the ""inputBox does not exist
     inputBox = document.createElement("input");
     inputBox.setAttribute("id", "inputBoxId");
-    inputBox.setAttribute("placeHolder", "type and search for episode");
+    inputBox.setAttribute("placeHolder", "type and search");
     inputBox.style.width = "25em";
     inputBox.style.backgroundColor = "#f5f5f5";
     inputBox.style.margin = "0.8em"; // spacing to the left of episode list
