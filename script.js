@@ -102,20 +102,22 @@ function allTvShowsListings(tvShow) {
   });
 
   const summaryImageDiv = document.createElement("div");
-  summaryImageDiv.setAttribute("id", "summaryImageDiv");
+  summaryImageDiv.setAttribute("class", "summaryImageDiv");
   let tvShowsImage = document.createElement("img");
+  let summaryDiv = document.createElement("div");
   let tvShowsSummary = document.createElement("p");
   let tvShowsInfo = document.createElement("ul");
-  tvShowsInfo.setAttribute("id", "tvShowsInfo");
+  tvShowsInfo.setAttribute("class", "tvShowsInfo");
   let tvShowsRating = document.createElement("li");
   let tvShowsGenre = document.createElement("li");
   let tvShowsStatus = document.createElement("li");
   let tvShowsRunTime = document.createElement("li");
   
   tvShowsTitle.innerHTML = tvShow.name;
-
+  
   if (tvShow.image === null || tvShow.image === "") {
-    tvShowsImage.src = "img/error.jpg";
+    tvShowsImage.setAttribute("class", "img-error")
+    tvShowsImage.src = "img/no_image.jpg";
   } else {
     tvShowsImage.src = tvShow.image.medium;
   }
@@ -129,7 +131,8 @@ function allTvShowsListings(tvShow) {
   mainTvInfo.appendChild(tvShowsTitle);
   mainTvInfo.appendChild(summaryImageDiv);
   summaryImageDiv.appendChild(tvShowsImage);
-  summaryImageDiv.appendChild(tvShowsSummary);
+  summaryDiv.appendChild(tvShowsSummary);
+  summaryImageDiv.appendChild(summaryDiv)
   tvShowsInfoContainer.appendChild(mainTvInfo);
   tvShowsInfoContainer.appendChild(tvShowsInfo);
   tvShowsInfo.appendChild(tvShowsRating);
