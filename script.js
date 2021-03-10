@@ -1,4 +1,3 @@
-
 // level 500
 function getAllTvShowsApi() {
   const rootDiv = document.getElementById("root");
@@ -48,8 +47,6 @@ function homeReturnBtn() {
       });
     }
     updateCounter(getAllShows().length, getAllShows().length); // this updates the counter when the return button is fired
-    
-
   });
 }
 
@@ -71,7 +68,7 @@ function allTvShowsListings(tvShow) {
 
   let tvShowsTitle = document.createElement("h2");
   tvShowsTitle.setAttribute("showId", tvShow.id);
-  tvShowsTitle.className = "tvShowTitleClass-hoover"
+  tvShowsTitle.className = "tvShowTitleClass-hoover";
 
   tvShowsTitle.addEventListener("click", (event) => {
     let tvSelector = document.querySelector("#select-tv"); // hide the tv episodes when the button is pressed
@@ -112,11 +109,11 @@ function allTvShowsListings(tvShow) {
   let tvShowsGenre = document.createElement("li");
   let tvShowsStatus = document.createElement("li");
   let tvShowsRunTime = document.createElement("li");
-  
+
   tvShowsTitle.innerHTML = tvShow.name;
-  
+
   if (tvShow.image === null || tvShow.image === "") {
-    tvShowsImage.setAttribute("class", "img-error")
+    tvShowsImage.setAttribute("class", "img-error");
     tvShowsImage.src = "img/no_image.jpg";
   } else {
     tvShowsImage.src = tvShow.image.medium;
@@ -132,14 +129,13 @@ function allTvShowsListings(tvShow) {
   mainTvInfo.appendChild(summaryImageDiv);
   summaryImageDiv.appendChild(tvShowsImage);
   summaryDiv.appendChild(tvShowsSummary);
-  summaryImageDiv.appendChild(summaryDiv)
+  summaryImageDiv.appendChild(summaryDiv);
   tvShowsInfoContainer.appendChild(mainTvInfo);
   tvShowsInfoContainer.appendChild(tvShowsInfo);
   tvShowsInfo.appendChild(tvShowsRating);
   tvShowsInfo.appendChild(tvShowsGenre);
   tvShowsInfo.appendChild(tvShowsStatus);
   tvShowsInfo.appendChild(tvShowsRunTime);
-  //console.log(tvShowsInfoContainer);
   return tvShowsInfoContainer;
 }
 //-------------------------------------------------------------------------------------------------------
@@ -284,12 +280,10 @@ function addSingleEpisode(episode) {
 
 // container for the single episodes
 const addAllEpisodes = (episodeList) => {
-
   upDateDropDownMenu(episodeList);
   const rootElem = document.getElementById("root");
   let styleContainer = document.getElementById("styleContainer");
   let footer = document.getElementById("footer");
-
 
   if (styleContainer === null) {
     styleContainer = document.createElement("div");
@@ -395,7 +389,7 @@ function updateCounter(numberOfMovies, totalMovies) {
 let tvShowData = getAllShows().sort(compare);
 
 function searchTvShowData(searchString) {
-    // searches for data specifically for the tv show episodes
+  // searches for data specifically for the tv show episodes
   // let episodeIndex = 0;
   let episodeCount = 0; // this is the number of episodes that match the key word search string
 
@@ -409,7 +403,6 @@ function searchTvShowData(searchString) {
       data.summary.toLowerCase().includes(searchString) ||
       genres.toLowerCase().includes(searchString)
     ) {
-
       showEpisode(tvShowsInfoContainers[index]);
       episodeCount++;
     } else if (
@@ -429,7 +422,6 @@ function searchTvShowData(searchString) {
 }
 
 function searchEpisodeData(searchString) {
-
   let episodeContainers = document.getElementsByClassName(
     "episode-container-class-name"
   ); // An array of episode container
@@ -542,20 +534,14 @@ let episodes; // global variable that contains the episodes/ data from the api
 
 function getAllEpisodesApi(id) {
   // function to get the apis
-  // let arrayOfEpisodes;
   fetch(`https://api.tvmaze.com/shows/${id}/episodes`)
     .then((response) => response.json().then((data) => data)) // return response.json this gathers the data
     .then((allEpisodes) => {
       episodes = allEpisodes;
       addAllEpisodes(allEpisodes);
-      updateCounter(allEpisodes.length, allEpisodes.length); // This updates the counter to enable 
+      updateCounter(allEpisodes.length, allEpisodes.length); // This updates the counter to enable
     }) // this does not get called until we get the data
     .catch((error) => console.log(error));
 }
 
 window.onload = getAllTvShowsApi;
-
-
-
-
-
