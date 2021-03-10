@@ -166,7 +166,7 @@ function addShowSelector(showData) {
     option.innerHTML = `${show.name}`; // loops over the tv show data
     select.appendChild(option);
   });
-  // }
+ 
   // loose a track of the episode list because errors occur when it tries to
   //compare the two fields and the array
   // it also fails with the hide and show
@@ -390,7 +390,6 @@ let tvShowData = getAllShows().sort(compare);
 
 function searchTvShowData(searchString) {
   // searches for data specifically for the tv show episodes
-  // let episodeIndex = 0;
   let episodeCount = 0; // this is the number of episodes that match the key word search string
 
   let tvShowsInfoContainers = document.getElementsByClassName("infoContainer");
@@ -398,7 +397,6 @@ function searchTvShowData(searchString) {
   tvShowData.forEach((data, index) => {
     let genres = data.genres.toString(); // extracted data from the array of genres
     if (
-      // searchString.includes("24" && data.name.includes("24"))
       data.name.toLowerCase().includes(searchString) ||
       data.summary.toLowerCase().includes(searchString) ||
       genres.toLowerCase().includes(searchString)
@@ -425,7 +423,6 @@ function searchEpisodeData(searchString) {
   let episodeContainers = document.getElementsByClassName(
     "episode-container-class-name"
   ); // An array of episode container
-  //  let tvShowData = getAllShows();
 
   // searches for data specifically for the tv show listings
   let episodeIndex = 0;
@@ -522,7 +519,6 @@ function makePageForEpisodes(episodeList) {
 function setup() {
   // fetches the data from the tv show website
   const shows = getAllShows().sort(compare);
-  // console.log(shows[0]);
   const showId = shows[0].id;
   fetch(`https://api.tvmaze.com/shows/${showId}/episodes`)
     .then((response) => response.json().then((data) => data)) // remove the end of the json once bug is fixed with the header// return response.json this gathers the data
