@@ -29,15 +29,16 @@
 #mainTvInfo h2 {
   margin-left: 1em;
 }
-#summaryImageDiv {
+.summaryImageDiv {
   display: flex;
   align-items: center;
   justify-content: space-around;
+  
 }
-#summaryImageDiv img, p {
+.summaryImageDiv img, p {
   margin-left: 1em;
 }
-#tvShowsInfo {
+.tvShowsInfo {
   border: 2px solid grey;
   border-radius: 5px;
   margin-left: 1em;
@@ -52,4 +53,9 @@ margin-left: 1em;
 }
 .tvShowTitleClass-hoover:hover{
   background-color: coral;
+}
+
+.img-error{
+  width: 210px;
+  height: 295px;
 }
