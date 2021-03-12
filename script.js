@@ -364,7 +364,7 @@ const addDropDownMenu = (episodeList) => {
 };
 
 // counter function display creates the dom
-const addCounter = (_) => {
+const addCounter = () => {
   counterDisplay = document.createElement("div");
   counterDisplay.setAttribute("id", "counterDisplayID");
   counterDisplay.style.marginTop = "0.5em"; // centre below
@@ -516,15 +516,15 @@ function makePageForEpisodes(episodeList) {
   addFooter();
 }
 
-function setup() {
-  // fetches the data from the tv show website
-  const shows = getAllShows().sort(compare);
-  const showId = shows[0].id;
-  fetch(`https://api.tvmaze.com/shows/${showId}/episodes`)
-    .then((response) => response.json().then((data) => data)) // remove the end of the json once bug is fixed with the header// return response.json this gathers the data
-    .then((allEpisodes) => makePageForEpisodes(allEpisodes)) // this does nt get called until we get the data
-    .catch((error) => console.log(error));
-}
+// function setup() {
+//   // fetches the data from the tv show website
+//   const shows = getAllShows().sort(compare);
+//   const showId = shows[0].id;
+//   fetch(`https://api.tvmaze.com/shows/${showId}/episodes`)
+//     .then((response) => response.json().then((data) => data)) // remove the end of the json once bug is fixed with the header// return response.json this gathers the data
+//     .then((allEpisodes) => makePageForEpisodes(allEpisodes)) // this does nt get called until we get the data
+//     .catch((error) => console.log(error));
+// }
 
 let episodes; // global variable that contains the episodes/ data from the api
 
